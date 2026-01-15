@@ -111,32 +111,25 @@ struct CardFace: View {
 
 
 struct CardsGrid : View {
-    //@Environment(GameViewModel.self) var gameViewModel : GameViewModel
+    @Environment(GameViewModel.self) var gameViewModel : GameViewModel
     let columns = 4
     let rows = 4
     var body : some View {
         VStack {
-            ForEach(0...rows, id: \.self) { row in
+            ForEach(0..<gameViewModel.rows, id: \.self) { row in
                 HStack {
-                    ForEach(0...columns, id: \.self) { column in
-                        CardView(card: Card(shape: .car, isFaceUp: false))
+                    ForEach(0..<gameViewModel.columns, id: \.self) { column in
+                        let index = row * gameViewModel.columns + column
+                        if index < gameViewModel.cards.count {
+                            CardView(card: gameViewModel.cards[index])
+                                .onTapGesture {
+                                    //TODO: use viewModel handler
+                                }
+
+                        }
                     }
                 }
             }
-//            ForEach(0..<gameViewModel.rows, id: \.self) { row in
-//                HStack {
-//                    ForEach(0..<gameViewModel.columns, id: \.self) { column in
-//                        let index = row * gameViewModel.columns + column
-//                        if index < gameViewModel.cards.count {
-//                            CardView(card: gameViewModel.cards[index])
-//                                .onTapGesture {
-//                                    gameViewModel.cardTapped(gameViewModel.cards[index])
-//                                }
-//
-//                        }
-//                    }
-//                }
-//            }
         }
     }
 }

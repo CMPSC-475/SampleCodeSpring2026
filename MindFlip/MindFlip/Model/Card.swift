@@ -33,7 +33,5 @@ struct Card: Identifiable, Equatable {
     static func == (lhs: Card, rhs: Card) -> Bool {
         lhs.id == rhs.id
     }
-    
-    
 }
 

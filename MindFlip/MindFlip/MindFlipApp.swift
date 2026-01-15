@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct MindFlipApp: App {
+    @State var manager : GameViewModel = GameViewModel()
     var body: some Scene {
         WindowGroup {
             MainView()
+                .environment(manager)
         }
     }
 }

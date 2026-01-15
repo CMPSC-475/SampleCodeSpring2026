@@ -8,19 +8,11 @@
 import SwiftUI
 
 struct MainView: View {
+    @Environment(GameViewModel.self) var manager : GameViewModel
+    
     var body: some View {
         ZStack {
-            LinearGradient(
-                gradient: Gradient(colors: [
-                    Color(red: 0.10, green: 0.12, blue: 0.28),
-                    Color(red: 0.36, green: 0.24, blue: 0.66)
-                ]),
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
-            
-            
+            BackgroundColor.ignoresSafeArea()
             VStack {
                 
                 HeaderTitle()
@@ -33,6 +25,17 @@ struct MainView: View {
             .padding()
         }
     }
+    
+    
+    let BackgroundColor : LinearGradient = LinearGradient(
+        gradient: Gradient(colors: [
+            Color(red: 0.10, green: 0.12, blue: 0.28),
+            Color(red: 0.36, green: 0.24, blue: 0.66)
+        ]),
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
+    
 }
 
 struct ScoreBoardView : View {
@@ -114,4 +117,5 @@ struct HeaderTitle : View {
 
 #Preview {
     MainView()
+        .environment(GameViewModel())
 }
