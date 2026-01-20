@@ -17,8 +17,11 @@ enum GameState {
 class GameViewModel {
     var gameState : GameState = .start
     var cards : [Card] = []
-    var flippedCards : [Card] = []
     var isCheckingMatch = false
+    
+    var flippedCards: [Card] {
+        cards.filter { $0.isFaceUp && !$0.isMatched }
+    }
     
     
     let columns = 4
@@ -53,7 +56,7 @@ class GameViewModel {
         
         // Shuffle the cards
         cards = newCards.shuffled()
-        flippedCards = []
+
         gameState = .start
     }
     
@@ -73,7 +76,7 @@ class GameViewModel {
                     cards[secondIndex].isMatched = true
                 }
                 
-                flippedCards.removeAll()
+                isCheckingMatch = false
                 
                 // Check if game is complete
                 checkGameCompletion()
@@ -85,7 +88,6 @@ class GameViewModel {
                     cards[secondIndex].isFaceUp = false
                 }
                 
-                flippedCards.removeAll()
                 isCheckingMatch = false
         }
     }

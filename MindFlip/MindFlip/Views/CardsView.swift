@@ -76,6 +76,30 @@ struct CardFace: View {
     }
 }
 
+
+struct CardsGrid : View {
+    @Environment(GameViewModel.self) var gameViewModel : GameViewModel
+    var body : some View {
+        let gridSize = Int(sqrt(Double(gameViewModel.cards.count)))
+        
+        ForEach(0..<gridSize, id:\.self) { row in
+            HStack {
+                ForEach(0..<gridSize, id:\.self) { column in
+                    let index = row * gridSize + column
+                    if index < gameViewModel.cards.count {
+                        let card = gameViewModel.cards[index]
+                        CardView(card: card)
+                            .aspectRatio(1.0, contentMode: .fit)
+                            .onTapGesture {
+                                gameViewModel.cardTapped(card)
+                            }
+                    }
+                }
+            }
+        }
+    }
+}
+
 #Preview {
     ZStack {
         LinearGradient(
@@ -110,26 +134,4 @@ struct CardFace: View {
 
 
 
-struct CardsGrid : View {
-    @Environment(GameViewModel.self) var gameViewModel : GameViewModel
-    let columns = 4
-    let rows = 4
-    var body : some View {
-        VStack {
-            ForEach(0..<gameViewModel.rows, id: \.self) { row in
-                HStack {
-                    ForEach(0..<gameViewModel.columns, id: \.self) { column in
-                        let index = row * gameViewModel.columns + column
-                        if index < gameViewModel.cards.count {
-                            CardView(card: gameViewModel.cards[index])
-                                .onTapGesture {
-                                    //TODO: use viewModel handler
-                                }
 
-                        }
-                    }
-                }
-            }
-        }
-    }
-}

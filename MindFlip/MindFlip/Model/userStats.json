@@ -1,0 +1,42 @@
+[
+  {
+    "id": "f3b0a9b4-1c8e-4a0a-9a0f-2f7a4d3c8a11",
+    "name": "Mario",
+    "gameDifficulty": "Easy",
+    "missed": 2,
+    "correct": 8,
+    "time": 70
+  },
+  {
+    "id": "9b6c2e7d-5f4b-43b0-a9c3-0e1f2a3b4c55",
+    "name": "Luigi",
+    "gameDifficulty": "Easy",
+    "missed": 1,
+    "correct": 9,
+    "time": 63
+  },
+  {
+    "id": "2c4f8a10-7b39-4f41-bd3c-9a7e1c5d2b88",
+    "name": "Princess Peach",
+    "gameDifficulty": "Easy",
+    "missed": 4,
+    "correct": 6,
+    "time": 34
+  },
+  {
+    "id": "7e1d3c29-8a4b-4ee2-98fd-4b1a6f9d0c21",
+    "name": "Yoshi",
+    "gameDifficulty": "Easy",
+    "missed": 0,
+    "correct": 10,
+    "time": 40
+  },
+  {
+    "id": "a9c2d4e6-1b23-4fa7-9d88-0c1e2f3a4b66",
+    "name": "Bowser",
+    "gameDifficulty": "Easy",
+    "missed": 3,
+    "correct": 7,
+    "time": 122
+  }
+]

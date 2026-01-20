@@ -76,7 +76,7 @@ struct ScoreBoardView : View {
 struct NewGameButton : View {
     var body: some View {
         Button {
-            //TODO
+            //TODO: -
         } label: {
             HStack(spacing: 10) {
                 Image(systemName: "arrow.counterclockwise.circle.fill")
