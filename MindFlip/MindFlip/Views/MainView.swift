@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     @Environment(GameViewModel.self) var manager : GameViewModel
+    @State var showSettings : Bool = false
     
     var body: some View {
         ZStack {
@@ -19,10 +20,23 @@ struct MainView: View {
                 ScoreBoardView()
                 CardsGrid()
                 Spacer()
-                NewGameButton()
+                HStack {
+                    NewGameButton()
+                    Button {
+                        showSettings = true
+                    } label:
+                    {
+                        Image(systemName: "gear")
+                            .font(.title)
+                    }
+                    
+                }
 
             }
             .padding()
+            .sheet(isPresented: $showSettings) {
+                SettingsSheetView()
+            }
         }
     }
     

@@ -19,6 +19,9 @@ class GameViewModel {
     var cards : [Card] = []
     var isCheckingMatch = false
     
+    
+    var gameStats :GameStats = .init()
+    
     var flippedCards: [Card] {
         cards.filter { $0.isFaceUp && !$0.isMatched }
     }
@@ -61,7 +64,27 @@ class GameViewModel {
     }
     
     func cardTapped(_ card : Card ) {
-        //TODO: implement logic for this
+        guard !isCheckingMatch,
+              let index = cards.firstIndex(where: { $0.id == card.id }),
+              !cards[index].isFaceUp,
+              !cards[index].isMatched else {
+            return
+        }
+        
+        // Start the timer on first card tap
+        if gameState == .start {
+            gameState = .playing
+            //TODO: start timer
+        }
+        
+        // Flip the card
+        cards[index].isFaceUp = true
+        
+        // Check if we have two cards flipped
+        if flippedCards.count == 2 {
+            isCheckingMatch = true
+            checkForMatch()
+        }
     }
     
     private func checkForMatch() {

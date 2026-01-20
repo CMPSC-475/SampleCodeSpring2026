@@ -7,7 +7,9 @@
 import Foundation
 
 enum GameDifficulty: String, CaseIterable, Codable {
-    case easy, medium, hard
+    case easy = "Easy"
+    case medium = "Medium"
+    case hard = "Hard"
     
     var rawValue : String {
         switch self {
