@@ -11,6 +11,19 @@ struct MainView: View {
     @Environment(GameViewModel.self) var manager : GameViewModel
     @State var showSettings : Bool = false
     
+    // Computed properties for game stats
+    private var matchedPairs: Int {
+        manager.cards.filter { $0.isMatched }.count / 2
+    }
+    private var totalPairs: Int {
+        manager.cards.count / 2
+    }
+    private var isGameComplete: Bool {
+        matchedPairs == totalPairs && totalPairs > 0
+    }
+    
+    
+    
     var body: some View {
         ZStack {
             BackgroundColor.ignoresSafeArea()
@@ -21,7 +34,6 @@ struct MainView: View {
                 CardsGrid()
                 Spacer()
                 TimerView()
-                    .opacity(0)
                 HStack {
                     NewGameButton()
                     SettingsButton(showSettingsSheet: $showSettings)
@@ -33,6 +45,10 @@ struct MainView: View {
             .padding()
             .sheet(isPresented: $showSettings) {
                 SettingsSheetView()
+            }
+            
+            if isGameComplete {
+                CelebrationOverlayView()
             }
         }
     }
@@ -79,12 +95,13 @@ struct SettingsButton : View {
 }
 
 struct ScoreBoardView : View {
+    @Environment(GameViewModel.self) var manager : GameViewModel
     var body : some View {
         HStack {
             VStack {
                 Text("Missed")
                     
-                Text("0")
+                Text("\(manager.missed)")
             }
             .foregroundStyle(.white)
             .padding()
@@ -95,7 +112,7 @@ struct ScoreBoardView : View {
             Spacer()
             VStack {
                 Text("Correct")
-                Text("0")
+                Text("\(manager.correct)")
                 
             }
             .foregroundStyle(.white)
@@ -114,9 +131,10 @@ struct ScoreBoardView : View {
 
 
 struct NewGameButton : View {
+    @Environment(GameViewModel.self) var manager : GameViewModel
     var body: some View {
         Button {
-            //TODO: -
+            manager.startNewGame()
         } label: {
             HStack(spacing: 10) {
                 Image(systemName: "arrow.counterclockwise.circle.fill")
@@ -154,49 +172,49 @@ struct HeaderTitle : View {
 }
 
 
-struct TimerView: View {
-    @Environment(GameViewModel.self) var gameViewModel: GameViewModel
-    
-    private var formattedTime: String {
-//        let minutes = Int(gameViewModel.elapsedTime) / 60
-//        let seconds = Int(gameViewModel.elapsedTime) % 60
-//        let milliseconds = Int((gameViewModel.elapsedTime.truncatingRemainder(dividingBy: 1)) * 100)
-//        return String(format: "%02d:%02d.%02d", minutes, seconds, milliseconds)
-        return "00:00:00"
-    }
-    
-    var body: some View {
-        TimelineView(.periodic(from: .now, by: 0.01)) { timeline in
-            HStack(spacing: 8) {
-                Image(systemName: "timer")
-                    .font(.title3)
-                Text(formattedTime)
-                    .font(.system(size: 32, weight: .bold, design: .monospaced))
-                    .contentTransition(.numericText())
-            }
-            .foregroundStyle(.white)
-            .padding(.horizontal, 24)
-            .padding(.vertical, 12)
-            .background(
-                Capsule()
-                    .fill(
-                        LinearGradient(
-                            colors: [
-                                Color(red: 0.4, green: 0.3, blue: 0.8),
-                                Color(red: 0.5, green: 0.4, blue: 0.9)
-                            ],
-                            startPoint: .leading,
-                            endPoint: .trailing
-                        )
+struct CelebrationOverlayView : View {
+    @Environment(GameViewModel.self) var gameViewModel : GameViewModel
+    var body : some View {
+        ZStack {
+            Color.black.opacity(0.3)
+                .ignoresSafeArea()
+            
+            VStack(spacing: 20) {
+                Text("🎉")
+                    .font(.system(size: 80))
+                Text("All pairs matched!")
+                    .font(.title2)
+                    .foregroundColor(.white.opacity(0.9))
+            
+                
+                Button {
+                    gameViewModel.startNewGame()
+                } label : {
+                    HStack(spacing: 10) {
+                        Text("Play Again!")
+                            .font(.title3.bold())
+                    }
+                    .foregroundColor(Color(red: 0.3, green: 0.3, blue: 0.8))
+                    .frame(width: 200, height: 54)
+                    .background(
+                        Capsule()
+                            .fill(.white)
+                            .shadow(color: .black.opacity(0.2), radius: 8, x: 0, y: 4)
                     )
-                    .shadow(color: .black.opacity(0.2), radius: 8, x: 0, y: 4)
-            )
-            .onChange(of: timeline.date) { _, _ in
-                gameViewModel.updateTimer()
+                }
             }
+            .padding(40)
+            .background(
+                RoundedRectangle(cornerRadius: 24)
+                    .fill(.ultraThinMaterial)
+            )
+            .shadow(color: .black.opacity(0.3), radius: 20)
         }
+        
     }
 }
+
+
 
 
 #Preview {

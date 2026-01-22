@@ -20,7 +20,6 @@ fileprivate  let backgroundColor = LinearGradient(
 struct SettingsSheetView: View {
     @Environment(GameViewModel.self) var manager: GameViewModel
     
-    private let sheetTabsHeaders : [String] = ["Leaderboard", "Settings"]
     
     private enum SheetTabHeaders : String, CaseIterable, Identifiable {
         case leaderboard, settings
@@ -76,7 +75,14 @@ struct SettingsSheetView: View {
 
 
 struct SettingsView : View {
+    @Environment(GameViewModel.self) var manager : GameViewModel
+    @Environment(\.dismiss) var dismiss
     @State var selectedDifficulty : GameDifficulty = .easy
+    
+    
+    private var disableApplyButton : Bool {
+        selectedDifficulty == manager.preferences.difficulty
+    }
     var body : some View {
         VStack(spacing: 20) {
             Text("Settings")
@@ -103,7 +109,10 @@ struct SettingsView : View {
             
             
             Button {
-                //TODO: -
+                manager.preferences.difficulty = selectedDifficulty
+                manager.startNewGame()
+                dismiss()
+                
             } label: {
                 HStack(spacing: 10) {
                     Image(systemName: "checkmark.circle.fill")
@@ -119,11 +128,13 @@ struct SettingsView : View {
                         .shadow(color: .black.opacity(0.2), radius: 8, x: 0, y: 4)
                 )
             }
+            .disabled(disableApplyButton)
+            .opacity(disableApplyButton ? 0.4 : 1.0)
             Spacer()
 
         }
         .onAppear {
-            //TODO: set selected difficulty from manager
+            selectedDifficulty = manager.preferences.difficulty
         }
 
     }

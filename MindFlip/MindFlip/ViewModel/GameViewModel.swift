@@ -25,14 +25,15 @@ class GameViewModel {
         cards.filter { $0.isFaceUp && !$0.isMatched }
     }
     
-    //TODO: implelement preferences
-    
-    let columns = 4
-    let rows = 4
+    var preferences : Preferences = .init()
+
     
     // Tracking User Stats
     var missed = 0
     var correct = 0
+    
+    var elapsedTime : TimeInterval = 0
+    var timerStartDate : Date?
     
     
     init() {
@@ -42,10 +43,23 @@ class GameViewModel {
     // Intents/Handlers
     func startNewGame() {
         // Create pairs of cards
+        let rows = preferences.difficulty.gridSize
+        let columns = preferences.difficulty.gridSize
         var newCards: [Card] = []
         let totalPairs = (rows * columns) / 2
-        let shapes = Array(CardShape.allCases.prefix(totalPairs))
         
+
+        // Reuse shapes if we need more pairs than available shapes
+        let availableShapes = Array(CardShape.allCases)
+    
+        // Create shapes array by cycling through available shapes
+        var shapes: [CardShape] = []
+        for i in 0..<totalPairs {
+            let shapeIndex = i % availableShapes.count
+            shapes.append(availableShapes[shapeIndex])
+        }
+        
+        // Create pairs of cards
         for shape in shapes {
             newCards.append(Card(shape: shape))
             newCards.append(Card(shape: shape))
@@ -56,6 +70,8 @@ class GameViewModel {
         correct = 0
         
         //TODO: Reset Timer
+        elapsedTime = 0
+        timerStartDate = nil
         
         // Shuffle the cards
         cards = newCards.shuffled()
@@ -74,7 +90,7 @@ class GameViewModel {
         // Start the timer on first card tap
         if gameState == .start {
             gameState = .playing
-            //TODO: start timer
+            timerStartDate = Date()
         }
         
         // Flip the card
@@ -92,6 +108,8 @@ class GameViewModel {
         let secondCard = flippedCards[1]
         
         if firstCard.shape == secondCard.shape {
+            Task {
+                try? await Task.sleep(for: .milliseconds(200))
                 correct += 1
                 if let firstIndex = cards.firstIndex(where: { $0.id == firstCard.id }),
                    let secondIndex = cards.firstIndex(where: { $0.id == secondCard.id }) {
@@ -103,7 +121,10 @@ class GameViewModel {
                 
                 // Check if game is complete
                 checkGameCompletion()
+            }
         } else {
+            Task {
+                try? await Task.sleep(for: .seconds(1))
                 missed += 1
                 if let firstIndex = cards.firstIndex(where: { $0.id == firstCard.id }),
                    let secondIndex = cards.firstIndex(where: { $0.id == secondCard.id }) {
@@ -112,19 +133,37 @@ class GameViewModel {
                 }
                 
                 isCheckingMatch = false
+            }
         }
     }
     
     private func checkGameCompletion() {
         let allMatched = cards.allSatisfy { $0.isMatched }
         if allMatched {
+            guard let timeStartDate = self.timerStartDate else { return }
             gameState = .ended
-            //TODO: track elapsed time
+            elapsedTime = Date().timeIntervalSince(timeStartDate)
+            saveGameStats()
         }
+        
     }
     
     func updateTimer() {
-        //TODO: implement timer update for views to show
+        guard gameState == .playing, let startDate = timerStartDate else { return }
+        elapsedTime = Date().timeIntervalSince(startDate)
+    }
+    
+    
+    private func saveGameStats() {
+        let timeInSeconds = Int(elapsedTime)
+        gameStats.addStat(
+            name: "user",
+            gameDifficulty: preferences.difficulty,
+            missed: missed,
+            correct: correct,
+            time: timeInSeconds
+        )
+        gameStats.save()
     }
 
 }
