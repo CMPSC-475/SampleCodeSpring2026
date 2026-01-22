@@ -36,7 +36,7 @@ struct GameStats {
         gameStats.append(
             StatEntry(name: name, gameDifficulty:gameDifficulty, missed: missed, correct: correct, time: time)
         )
-        save()
+        self.save()
     }
 
     mutating func loadFromJSON(filename: String) {

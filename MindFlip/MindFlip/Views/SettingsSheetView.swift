@@ -7,14 +7,131 @@
 import Foundation
 import SwiftUI
 
-//TODO: -
+
+fileprivate  let backgroundColor = LinearGradient(
+    gradient: Gradient(colors: [
+        Color(red: 0.10, green: 0.12, blue: 0.28),
+        Color(red: 0.36, green: 0.24, blue: 0.66)
+    ]),
+    startPoint: .topLeading,
+    endPoint: .bottomTrailing
+)
 
 struct SettingsSheetView: View {
     @Environment(GameViewModel.self) var manager: GameViewModel
     
+    private let sheetTabsHeaders : [String] = ["Leaderboard", "Settings"]
+    
+    private enum SheetTabHeaders : String, CaseIterable, Identifiable {
+        case leaderboard, settings
+        var id : String {return rawValue}
+    }
+    
+    
+    @State private var selectedTab : SheetTabHeaders = .leaderboard
+    
     private var sortedStats: [StatEntry] {
         manager.gameStats.gameStats.sorted { $0.time < $1.time }
     }
+    
+    
+    
+    var body: some View {
+        ZStack {
+            backgroundColor
+                .ignoresSafeArea()
+            
+            
+            VStack {
+                
+                Picker("Game Center", selection: $selectedTab) {
+                    ForEach(SheetTabHeaders.allCases) { tabHeader in
+                        Text(tabHeader.rawValue).tag(tabHeader)
+                    }
+                }
+                .pickerStyle(.segmented)
+                
+                
+                switch selectedTab {
+                case .leaderboard:
+                    LeaderBoardView(sortedStats: sortedStats)
+                case .settings:
+                    SettingsView()
+
+                }
+                
+                
+            }
+            .padding()
+            .background(backgroundColor)
+            
+            
+        }
+
+        
+    }
+    
+
+}
+
+
+struct SettingsView : View {
+    @State var selectedDifficulty : GameDifficulty = .easy
+    var body : some View {
+        VStack(spacing: 20) {
+            Text("Settings")
+                .font(.system(size: 36, weight: .black, design: .rounded))
+                .foregroundStyle(
+                    LinearGradient(
+                        colors: [.white, Color(white: 0.9)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .padding()
+            
+            Text("Select Difficulty")
+                .font(.system(size: 20))
+                .foregroundStyle(.white)
+                
+            Picker("Difficulty", selection: $selectedDifficulty) {
+                ForEach(GameDifficulty.allCases) { diff in
+                    Text(diff.rawValue.capitalized).tag(diff)
+                }
+            }
+            .pickerStyle(.segmented)
+            
+            
+            Button {
+                //TODO: -
+            } label: {
+                HStack(spacing: 10) {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.title3)
+                    Text("Apply Changes")
+                        .font(.title3.bold())
+                }
+                .foregroundColor(Color(red: 0.3, green: 0.3, blue: 0.8))
+                .frame(width: 200, height: 54)
+                .background(
+                    Capsule()
+                        .fill(.white)
+                        .shadow(color: .black.opacity(0.2), radius: 8, x: 0, y: 4)
+                )
+            }
+            Spacer()
+
+        }
+        .onAppear {
+            //TODO: set selected difficulty from manager
+        }
+
+    }
+}
+
+
+struct LeaderBoardView : View {
+    var sortedStats : [StatEntry]
     
     private func formatTime(_ seconds: Int) -> String {
         let minutes = seconds / 60
@@ -22,44 +139,30 @@ struct SettingsSheetView: View {
         return String(format: "%02d:%02d", minutes, secs)
     }
     
-    var body: some View {
-        ZStack {
-            backgroundColor
-                .ignoresSafeArea()
-            VStack {
-                Text("Leaderboard")
-                    .font(.system(size: 36, weight: .black, design: .rounded))
-                    .foregroundStyle(
-                        LinearGradient(
-                            colors: [.white, Color(white: 0.9)],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
+    var body : some View {
+        VStack {
+            Text("Leaderboard")
+                .font(.system(size: 36, weight: .black, design: .rounded))
+                .foregroundStyle(
+                    LinearGradient(
+                        colors: [.white, Color(white: 0.9)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
                     )
-                ScrollView {
-                    ForEach(Array(sortedStats.enumerated()), id: \.element.id) { index, stat in
-                        LeaderboardRow(
-                            rank: index + 1,
-                            stat: stat,
-                            formatTime: formatTime
-                        )
-                    }
+                )
+            ScrollView {
+                ForEach(Array(sortedStats.enumerated()), id: \.element.id) { index, stat in
+                    LeaderboardRow(
+                        rank: index + 1,
+                        stat: stat,
+                        formatTime: formatTime
+                    )
                 }
             }
-            .padding(.top, 20)
         }
-
+        .padding(.top, 20)
         
     }
-    
-    let backgroundColor = LinearGradient(
-        gradient: Gradient(colors: [
-            Color(red: 0.10, green: 0.12, blue: 0.28),
-            Color(red: 0.36, green: 0.24, blue: 0.66)
-        ]),
-        startPoint: .topLeading,
-        endPoint: .bottomTrailing
-    )
 }
 
 

@@ -19,13 +19,13 @@ class GameViewModel {
     var cards : [Card] = []
     var isCheckingMatch = false
     
-    
     var gameStats :GameStats = .init()
     
     var flippedCards: [Card] {
         cards.filter { $0.isFaceUp && !$0.isMatched }
     }
     
+    //TODO: implelement preferences
     
     let columns = 4
     let rows = 4

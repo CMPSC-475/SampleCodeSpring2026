@@ -6,7 +6,7 @@
 //
 import Foundation
 
-enum GameDifficulty: String, CaseIterable, Codable {
+enum GameDifficulty: String, CaseIterable, Codable, Identifiable {
     case easy = "Easy"
     case medium = "Medium"
     case hard = "Hard"
@@ -18,6 +18,8 @@ enum GameDifficulty: String, CaseIterable, Codable {
         case .hard: return "Hard"
         }
     }
+    
+    var id : String { rawValue }
     
     // map difficulty to grid size
     var gridSize : Int {
