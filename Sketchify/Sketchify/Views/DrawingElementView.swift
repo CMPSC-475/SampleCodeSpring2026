@@ -15,8 +15,27 @@ struct DrawingElementView: View {
     private let lineWidth: CGFloat = 5
     
     var body: some View {
-        //TODO: - Present drawn elements
-        EmptyView()
+        
+        switch self.element.tool {
+        case .circle:
+            Ellipse()
+                .stroke(element.color, lineWidth: lineWidth)
+                .frame(width: element.boundingRect.cgRect.width, height: element.boundingRect.cgRect.height)
+                .position(x: element.boundingRect.cgRect.midX, y: element.boundingRect.cgRect.midY)
+        case .square:
+            Rectangle()
+                .stroke(element.color, lineWidth: lineWidth)
+                .frame(width: element.boundingRect.cgRect.width, height: element.boundingRect.cgRect.height)
+                .position(x: element.boundingRect.cgRect.midX, y: element.boundingRect.cgRect.midY)
+        case .triangle:
+            TriangleShape()
+                .stroke(element.color, lineWidth: lineWidth)
+                .frame(width: element.boundingRect.cgRect.width, height: element.boundingRect.cgRect.height)
+                .position(x: element.boundingRect.cgRect.midX, y: element.boundingRect.cgRect.midY)
+        case .freeform:
+            FreeformShape(points: element.points.cgPointsCollection)
+                .stroke(element.color, lineWidth: lineWidth)
+        }
     }
 }
 

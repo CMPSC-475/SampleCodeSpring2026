@@ -6,6 +6,7 @@
 //
 import Foundation
 
+
 struct Point: Codable, Hashable {
     var x: Float = 0
     var y: Float = 0
