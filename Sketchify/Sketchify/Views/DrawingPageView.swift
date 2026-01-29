@@ -10,7 +10,7 @@ import SwiftUI
 
 struct DrawingPageView: View {
     @Environment(\.dismiss) private var dismiss
-    
+
     let pageId: UUID
     let onSave: (DrawingPage) -> Void
     
@@ -30,10 +30,37 @@ struct DrawingPageView: View {
     @State private var lineWidth: CGFloat = 2
     @State private var backgroundColor: Color = .white
     
-
     
+
     var body: some View {
-        VStack(spacing: 0) {
+        
+        let dragGesture = DragGesture()
+            .onChanged { value in
+                if selectedTool == .freeform {
+                    currentPoints.append(value.location)
+                } else {
+                    if currentPoints.count <= 1 {
+                        currentPoints.append(value.location)
+                    } else {
+                        currentPoints[1] = value.location
+                    }
+                }
+            }
+            .onEnded { value in
+                let element = DrawingElement(
+                    tool: selectedTool, points: currentPoints.pointsCollection,
+                    color: currentColor.colorComponents)
+                
+                drawingElements.append(element)
+                currentPoints.removeAll()
+                saveCurrentState()
+                
+            
+            }
+        
+        
+        
+        return VStack(spacing: 0) {
             // Drawing Canvas
             ZStack {
                 backgroundColor
@@ -85,6 +112,7 @@ struct DrawingPageView: View {
                     }
                 }
             }
+            .gesture(dragGesture)
             //TODO: add gesture
             
             // Unified Bottom Toolbar
