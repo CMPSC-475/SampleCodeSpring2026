@@ -21,20 +21,36 @@ struct DrawingElementView: View {
             Ellipse()
                 .stroke(element.color, lineWidth: lineWidth)
                 .frame(width: element.boundingRect.cgRect.width, height: element.boundingRect.cgRect.height)
+                .border(.red)
                 .position(x: element.boundingRect.cgRect.midX, y: element.boundingRect.cgRect.midY)
+                .border(.blue)
+                
         case .square:
             Rectangle()
                 .stroke(element.color, lineWidth: lineWidth)
                 .frame(width: element.boundingRect.cgRect.width, height: element.boundingRect.cgRect.height)
+                .border(.red)
                 .position(x: element.boundingRect.cgRect.midX, y: element.boundingRect.cgRect.midY)
+                .border(.blue)
         case .triangle:
             TriangleShape()
                 .stroke(element.color, lineWidth: lineWidth)
                 .frame(width: element.boundingRect.cgRect.width, height: element.boundingRect.cgRect.height)
+                .border(.red)
                 .position(x: element.boundingRect.cgRect.midX, y: element.boundingRect.cgRect.midY)
+                .border(.blue)
         case .freeform:
-            FreeformShape(points: element.points.cgPointsCollection)
+            let rect = element.boundingRect.cgRect
+            let localPoints = element.points.cgPointsCollection.map {
+                CGPoint(x: $0.x - rect.minX, y: $0.y - rect.minY)
+            }
+            
+            FreeformShape(points: localPoints)
                 .stroke(element.color, lineWidth: lineWidth)
+                .frame(width: rect.width, height: rect.height)
+                .border(.red)
+                .position(x: rect.midX, y: rect.midY)
+                .border(.blue)
         }
     }
 }

@@ -53,22 +53,34 @@ struct DrawingPageView: View {
                             Ellipse()
                                 .stroke(currentColor, lineWidth: lineWidth)
                                 .frame(width: rect.width, height: rect.height)
+                                .border(.red)
                                 .position(x: rect.midX, y: rect.midY)
                         case .square:
                             let rect = calculateBoundingRect(from: currentPoints)
                             Rectangle()
                                 .stroke(currentColor, lineWidth: lineWidth)
                                 .frame(width: rect.width, height: rect.height)
+                                .border(.red)
                                 .position(x: rect.midX, y: rect.midY)
                         case .triangle:
                             let rect = calculateBoundingRect(from: currentPoints)
                             TriangleShape()
                                 .stroke(currentColor, lineWidth: lineWidth)
                                 .frame(width: rect.width, height: rect.height)
+                                .border(.red)
                                 .position(x: rect.midX, y: rect.midY)
                         case .freeform:
-                            FreeformShape(points: currentPoints)
+                            let rect = calculateBoundingRect(from: currentPoints)
+                            let localPoints = currentPoints.map {
+                                CGPoint(x: $0.x - rect.minX, y: $0.y - rect.minY)
+                            }
+
+                            FreeformShape(points: localPoints)
                                 .stroke(currentColor, lineWidth: lineWidth)
+                                .border(.purple)
+                                .frame(width: rect.width, height: rect.height)
+                                .position(x: rect.midX, y: rect.midY)
+                                .border(.red)
                         }
                     }
                 }
@@ -110,11 +122,13 @@ struct DrawingPageView: View {
     
     // MARK: - Helper Functions
     private func calculateBoundingRect(from points: [CGPoint]) -> CGRect {
-        guard points.count >= 2 else { return .zero }
-        let minX = min(points[0].x, points.last!.x)
-        let minY = min(points[0].y, points.last!.y)
-        let maxX = max(points[0].x, points.last!.x)
-        let maxY = max(points[0].y, points.last!.y)
+        guard !points.isEmpty else { return .zero }
+        let xs = points.map { $0.x }
+        let ys = points.map { $0.y }
+        let minX = xs.min()!
+        let maxX = xs.max()!
+        let minY = ys.min()!
+        let maxY = ys.max()!
         return CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
     }
     

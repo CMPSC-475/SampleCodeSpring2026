@@ -94,6 +94,30 @@ struct DrawingPageCard: View {
 
 #Preview {
     let manager = SketchifyManager()
+    var drawingPage = DrawingPage(title: "Demo")
+    
+    // Example circle (if you want to keep it)
+    let circlePoints: [Point] = [
+        Point(x: 100, y: 100),
+        Point(x: 200, y: 200)
+    ]
+    
+    var freeformPoints: [Point] = []
+    for x in 50..<350 {
+        // Use Double for sin(), then convert back to Float
+        let xd = Double(x)
+        let yd = 350.0 + 120.0 * sin(xd * 0.1)   // tweak 0.1 → frequency
+        freeformPoints.append(
+            Point(x: Float(xd), y: Float(yd))
+        )
+    }
+    
+    drawingPage.elements.append(DrawingElement(tool: .circle, points: circlePoints))
+    drawingPage.elements.append(
+        DrawingElement(tool: .freeform, points: freeformPoints)
+    )
+    manager.drawingPages.append(drawingPage)
+    
     return MainView()
         .environment(manager)
 }

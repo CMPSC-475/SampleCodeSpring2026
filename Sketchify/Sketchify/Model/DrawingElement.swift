@@ -27,7 +27,7 @@ enum DrawingTool: String, Codable, Hashable {
         case .circle: return "Circle"
         case .square: return "Square"
         case .triangle: return "Triangle"
-        case .freeform: return "pencil.tip"
+        case .freeform: return "Pen"
         }
     }
 }
@@ -46,6 +46,14 @@ struct DrawingElement: Identifiable, Codable, Hashable {
     }
     
     var boundingRect: BoundingBox {
+        guard points.count >= 1 else { return BoundingBox() }
+        if tool == .freeform {
+            let minX = points.map {$0.x}.min()!
+            let minY = points.map {$0.y}.min()!
+            let maxX = points.map {$0.x}.max()!
+            let maxY = points.map {$0.y}.max()!
+            return BoundingBox(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
+        }
         guard points.count >= 2 else { return BoundingBox() }
         let minX = min(points[0].x, points[1].x)
         let minY = min(points[0].y, points[1].y)
