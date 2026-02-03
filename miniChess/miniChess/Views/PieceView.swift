@@ -18,15 +18,19 @@ struct PieceView: View {
     @State private var isDragging = false
     
     
+    var pieceColor : Color {
+        piece.color == .white ? Color.white : Color.gray
+    }
+    
     @ViewBuilder
     private func pieceView(for type: ChessPieceType) -> some View {
         switch type {
-        case .pawn:   PawnShape()
-        case .bishop: BishopShape()
-        case .rook:   RookShape()
-        case .knight: KnightShape()
-        case .king:   KingShape()
-        case .queen:  QueenShape()
+        case .pawn:   PawnShape().stroke(.black).fill(pieceColor)
+        case .bishop: BishopShape().stroke(.black).fill(pieceColor)
+        case .rook:   RookShape().stroke(.black).fill(pieceColor)
+        case .knight: KnightShape().stroke(.black).fill(pieceColor)
+        case .king:   KingShape().stroke(.black).fill(pieceColor)
+        case .queen:  QueenShape().stroke(.black).fill(pieceColor)
         }
     }
     

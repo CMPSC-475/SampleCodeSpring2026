@@ -41,14 +41,14 @@ struct ChessGameBoardView : View {
                 }
                 
                 // Pieces (on top so they can be dragged)
-                ForEach(chessManager.chessBoard.pieces, id: \.id) { piece in
-                    PieceView(
-                        piece: piece,
-                        cellWidth: cellWidth,
-                        cellHeight: cellHeight,
-                        geometry: geo
-                    )
-                }
+//                ForEach(chessManager.chessBoard.pieces, id: \.id) { piece in
+//                    PieceView(
+//                        piece: piece,
+//                        cellWidth: cellWidth,
+//                        cellHeight: cellHeight,
+//                        geometry: geo
+//                    )
+//                }
             }
         }
     }
