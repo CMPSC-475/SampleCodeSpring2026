@@ -69,27 +69,35 @@ private struct BoardView : View {
         
         GeometryReader { geo in
             ZStack {
-                ForEach(0..<totalCells, id: \.self) { i in
-                    let row = i / gridSize
-                    let col = i % gridSize
-                    let isEvenSquare = (row + col) % 2 == 0
-                    
-                    Rectangle()
-                        .fill(isEvenSquare ? Color.white : Color.black)
-                        .frame(width: geo.size.width / CGFloat(gridSize), height: geo.size.height / CGFloat(gridSize))
-                        .position(
-                            x: CGFloat(col) * geo.size.width / CGFloat(gridSize) + geo.size.width / CGFloat(gridSize) / 2,
-                            y: CGFloat(row) * geo.size.height / CGFloat(gridSize) + geo.size.height / CGFloat(gridSize) / 2
-                        )
-                        //TODO: add tap gesture
-                }
+//                ForEach(0..<totalCells, id: \.self) { i in
+//                    let row = i / gridSize
+//                    let col = i % gridSize
+//                    let isEvenSquare = (row + col) % 2 == 0
+//                    
+//                    Rectangle()
+//                        .fill(isEvenSquare ? Color.white : Color.black)
+//                        .frame(width: geo.size.width / CGFloat(gridSize), height: geo.size.height / CGFloat(gridSize))
+//                        .position(
+//                            x: CGFloat(col) * geo.size.width / CGFloat(gridSize) + geo.size.width / CGFloat(gridSize) / 2,
+//                            y: CGFloat(row) * geo.size.height / CGFloat(gridSize) + geo.size.height / CGFloat(gridSize) / 2
+//                        )
+//                        //TODO: add tap gesture
+//                }
 
                 Grid(gridSize: self.gridSize)
-                    .stroke(.black)
+                    .stroke(.red)
                 
             }
         }
         
     }
     
+}
+
+
+
+#Preview {
+    ChessGameBoardView()
+        .frame(width: 300, height: 300)
+        .environment(ChessManager())
 }

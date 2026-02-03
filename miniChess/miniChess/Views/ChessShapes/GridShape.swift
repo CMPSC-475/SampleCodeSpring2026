@@ -6,13 +6,32 @@
 //
 import SwiftUI
 
+//struct Grid: Shape {
+//    var gridSize: Int
+//    
+//    func path(in rect: CGRect) -> Path {
+//        let path = Path()
+//        //TODO: implement
+//        return path
+//    }
+//}
+
 struct Grid: Shape {
     var gridSize: Int
     
     func path(in rect: CGRect) -> Path {
         let path = Path()
-        //TODO: implement
+    
         return path
     }
+}
+
+
+
+#Preview {
+    Grid(gridSize: 5)
+        .stroke(.black)
+        .frame(width: 300, height: 300)
+        
 }
 
