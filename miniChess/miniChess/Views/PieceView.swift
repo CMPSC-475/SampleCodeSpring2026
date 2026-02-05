@@ -40,8 +40,24 @@ struct PieceView: View {
         
         let dragGesture = DragGesture()
             .onChanged { value in
+                
+                withAnimation {
+                    isDragging = true
+                }
+                
+                dragOffset = value.translation
+                chessManager.startDrag(for: piece)
             
             }.onEnded { value in
+                withAnimation {
+                    isDragging = false
+                }
+                
+                let finalX = cellWidth * CGFloat(piece.position.col) + cellWidth/2 + value.translation.width
+                let finalY = cellHeight * CGFloat(piece.position.row) + cellHeight / 2 +  value.translation.height
+                chessManager.endDrag(at: CGPoint(x: finalX, y: finalY), in: geometry)
+                dragOffset = .zero
+                
                 
             }
         
@@ -69,7 +85,7 @@ struct PieceView: View {
             
             .foregroundStyle(piece.color == .white ? Color.white : Color.black)
             .gesture(combinedGestures)
-//            .zIndex(isDragging ? 100 : 0)
+            .zIndex(isDragging ? 100 : 0)
     }
 }
 

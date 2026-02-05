@@ -81,6 +81,9 @@ private struct BoardView : View {
                             x: CGFloat(col) * geo.size.width / CGFloat(gridSize) + geo.size.width / CGFloat(gridSize) / 2,
                             y: CGFloat(row) * geo.size.height / CGFloat(gridSize) + geo.size.height / CGFloat(gridSize) / 2
                         )
+                        .onTapGesture {
+                            chessManager.selectPiece(at: row, col: col)
+                        }
                         //TODO: add tap gesture
                 }
 

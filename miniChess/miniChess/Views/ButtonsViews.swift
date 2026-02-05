@@ -9,8 +9,12 @@ import SwiftUI
 
 struct NewGameButton : View {
     @Environment(ChessManager.self) var chessManager : ChessManager
+    
+    @State var scale : CGFloat = 1.0
+    
     var body : some View {
         Button {
+            scale = 1.5
             chessManager.resetGame()
         } label: {
             HStack(spacing: 10) {
@@ -19,6 +23,8 @@ struct NewGameButton : View {
                 Text("New Game")
                     .fontWeight(.semibold)
             }
+            .animation(.easeInOut, value: scale)
+            
             .foregroundStyle(.white)
             .padding(.horizontal, 30)
             .padding(.vertical, 14)
@@ -38,6 +44,8 @@ struct NewGameButton : View {
                 Capsule()
                     .stroke(Color.white.opacity(0.3), lineWidth: 1)
             )
+            .scaleEffect(scale)
+            
         }
         .padding(.top, 10)
         
