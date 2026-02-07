@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct SnippetLabApp: App {
+    @State var snippetManager : SnippetManager = SnippetManager()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
+                .environment(snippetManager)
         }
     }
 }
