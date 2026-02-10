@@ -1,0 +1,234 @@
+[
+  {
+    "title": "Ziggy's Field",
+    "description": "Airport serving the State College area.",
+    "category": "airport",
+    "address": "State College, PA",
+    "latitude": 40.8499985,
+    "longitude": -77.9056015
+  },
+  {
+    "title": "Chumley's",
+    "description": "Mo-Sa 16:00-01:00",
+    "category": "bar",
+    "address": "108 West College Avenue, State College, PA 16801-3838",
+    "latitude": 40.794124,
+    "longitude": -77.8617721
+  },
+  {
+    "title": "Champ's Downtown",
+    "description": "Mo-Fr 16:00-02:00, Sa,Su 12:00-02:00",
+    "category": "bar",
+    "address": "139 South Allen Street, State College, PA 16801",
+    "latitude": 40.7937545,
+    "longitude": -77.8605492
+  },
+  {
+    "title": "The Shandygaff",
+    "description": "7:00 - 2:00",
+    "category": "bar",
+    "address": "212 East College Avenue, State College, PA 16801",
+    "latitude": 40.7953248,
+    "longitude": -77.859564
+  },
+  {
+    "title": "Vibe Coffee Co.",
+    "description": "Mo-Fr 07:00-18:00; Sa,Su 09:00-16:00",
+    "category": "coffee",
+    "address": "401 West Beaver Avenue, State College, PA 16801",
+    "latitude": 40.7907765,
+    "longitude": -77.8640698
+  },
+  {
+    "title": "The Cheese Shoppe",
+    "description": "Mo-Sa 08:00-13:00",
+    "category": "coffee",
+    "address": "234 East Calder Way, State College, PA 16801",
+    "latitude": 40.7954829,
+    "longitude": -77.8590301
+  },
+  {
+    "title": "Starbucks",
+    "description": "Mo-Th 07:30-22:00; Fr 07:30-19:00; Sa-Su 11:00-19:00",
+    "category": "coffee",
+    "address": "State College, PA",
+    "latitude": 40.798613,
+    "longitude": -77.8654897
+  },
+  {
+    "title": "Allen Street Grill",
+    "description": "Fr-Sa 16:30-22:00; Su-Mo off; Tu-Th 16:30-20:30",
+    "category": "dining",
+    "address": "100 West College Avenue, State College, PA 16801-3838",
+    "latitude": 40.7942261,
+    "longitude": -77.8616509
+  },
+  {
+    "title": "The Corner Room",
+    "description": "Mo-Th 11:30-19:30; Fr-Sa 09:00-21:00; Su 09:00-20:00",
+    "category": "dining",
+    "address": "100 West College Avenue, State College, PA 16801",
+    "latitude": 40.7942789,
+    "longitude": -77.8616132
+  },
+  {
+    "title": "Allen Street Pizza",
+    "description": "Mo-We 11:30-02:00; Th-Fr 11:30-03:00; Sa 12:00-03:00; Su 12:00-01:00",
+    "category": "dining",
+    "address": "128 South Allen Street, State College, PA 16801",
+    "latitude": 40.7937506,
+    "longitude": -77.8609609
+  },
+  {
+    "title": "Sunoco",
+    "description": "Gas station in State College.",
+    "category": "Gas Station",
+    "address": "State College, PA",
+    "latitude": 40.7774183,
+    "longitude": -77.7906318
+  },
+  {
+    "title": "Uni-Mart",
+    "description": "Gas station in State College.",
+    "category": "Gas Station",
+    "address": "1209 North Atherton Street, State College, PA 16803",
+    "latitude": 40.8021116,
+    "longitude": -77.8804483
+  },
+  {
+    "title": "Sheetz",
+    "description": "Gas station in State College.",
+    "category": "Gas Station",
+    "address": "State College, PA",
+    "latitude": 40.8091244,
+    "longitude": -77.9009786
+  },
+  {
+    "title": "Unnamed",
+    "description": "Hospital and medical services.",
+    "category": "hospital",
+    "address": "State College, PA",
+    "latitude": 40.782151,
+    "longitude": -77.8861236
+  },
+  {
+    "title": "Penn Highlands State College",
+    "description": "Hospital and medical services.",
+    "category": "hospital",
+    "address": "239 Colonnade Boulevard, State College, PA 16803",
+    "latitude": 40.8160951,
+    "longitude": -77.9021737
+  },
+  {
+    "title": "Hotel State College",
+    "description": "Hotel accommodation in State College.",
+    "category": "hotel",
+    "address": "100 West College Avenue, State College, PA 16801-3838",
+    "latitude": 40.7941923,
+    "longitude": -77.8617028
+  },
+  {
+    "title": "Hyatt Place State College",
+    "description": "Hotel accommodation in State College.",
+    "category": "hotel",
+    "address": "219 West Beaver Avenue, State College, PA 16801",
+    "latitude": 40.7923883,
+    "longitude": -77.862121
+  },
+  {
+    "title": "Scholar Hotel State College",
+    "description": "Hotel accommodation in State College.",
+    "category": "hotel",
+    "address": "205 East Beaver Avenue, State College, PA 16801",
+    "latitude": 40.7946313,
+    "longitude": -77.8590467
+  },
+  {
+    "title": "Premiere Theater 12",
+    "description": "Movie theater in State College.",
+    "category": "movies",
+    "address": "125 Premiere Drive, State College, PA 16801",
+    "latitude": 40.8403023,
+    "longitude": -77.8010781
+  },
+  {
+    "title": "Unnamed",
+    "description": "Parking facility in State College.",
+    "category": "parking",
+    "address": "State College, PA",
+    "latitude": 40.8007638,
+    "longitude": -77.8514667
+  },
+  {
+    "title": "Allen Street Grill",
+    "description": "Fr-Sa 16:30-22:00; Su-Mo off; Tu-Th 16:30-20:30",
+    "category": "restaurant",
+    "address": "100 West College Avenue, State College, PA 16801-3838",
+    "latitude": 40.7942261,
+    "longitude": -77.8616509
+  },
+  {
+    "title": "The Corner Room",
+    "description": "Mo-Th 11:30-19:30; Fr-Sa 09:00-21:00; Su 09:00-20:00",
+    "category": "restaurant",
+    "address": "100 West College Avenue, State College, PA 16801",
+    "latitude": 40.7942789,
+    "longitude": -77.8616132
+  },
+  {
+    "title": "Allen Street Pizza",
+    "description": "Mo-We 11:30-02:00; Th-Fr 11:30-03:00; Sa 12:00-03:00; Su 12:00-01:00",
+    "category": "restaurant",
+    "address": "128 South Allen Street, State College, PA 16801",
+    "latitude": 40.7937506,
+    "longitude": -77.8609609
+  },
+  {
+    "title": "Allen Street Pizza",
+    "description": "Mo-We 11:30-02:00; Th-Fr 11:30-03:00; Sa 12:00-03:00; Su 12:00-01:00",
+    "category": "pizza",
+    "address": "128 South Allen Street, State College, PA 16801",
+    "latitude": 40.7937506,
+    "longitude": -77.8609609
+  },
+  {
+    "title": "Snap Custom Pizza",
+    "description": "Su-Th 11:00-22:00; Fr-Sa 11:00-23:00",
+    "category": "pizza",
+    "address": "132 West College Avenue, State College, PA 16801",
+    "latitude": 40.7936431,
+    "longitude": -77.8624199
+  },
+  {
+    "title": "Fresh Bites Pizza",
+    "description": "Pizza restaurant in State College.",
+    "category": "pizza",
+    "address": "300c South Pugh Street, State College, PA 16801",
+    "latitude": 40.7931052,
+    "longitude": -77.8570573
+  },
+  {
+    "title": "McLanahan's Penn State Room",
+    "description": "Mo-Su 08:00-24:00",
+    "category": "shopping",
+    "address": "414 East College Avenue, State College, PA 16801",
+    "latitude": 40.7979464,
+    "longitude": -77.8566636
+  },
+  {
+    "title": "Lion's Pride",
+    "description": "Mo-Sa 09:30-17:30; Su 11:00-16:00",
+    "category": "shopping",
+    "address": "112 East College Avenue, State College, PA 16801",
+    "latitude": 40.7946455,
+    "longitude": -77.8610818
+  },
+  {
+    "title": "The Lions Fan Shop",
+    "description": "Mo-Sa 09:30-20:00; Su 10:00-19:00",
+    "category": "shopping",
+    "address": "136 East College Avenue, State College, PA 16801",
+    "latitude": 40.7950529,
+    "longitude": -77.8605402
+  }
+]
