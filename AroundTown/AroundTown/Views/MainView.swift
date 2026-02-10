@@ -15,9 +15,6 @@ struct MainView: View {
         DownTownMapView()
     }
     
-    
-
-
 }
 
 #Preview {

@@ -15,6 +15,7 @@ struct Place: Identifiable, Codable {
     var address : String
     var latitude : Double
     var longitude : Double
+
     
     
     init(from decoder: any Decoder) throws {
