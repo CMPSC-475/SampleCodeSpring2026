@@ -24,18 +24,3 @@ class LocationManager {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

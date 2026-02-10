@@ -15,6 +15,23 @@ struct DownTownMapView: View {
     
     @State var selectedDetents : PresentationDetent = .fraction(0.3)
     
+    @ViewBuilder
+    var sheetDetailView : some View {
+        if let selectedPlace = locationManager.selectedPlace {
+            switch selectedDetents {
+            case .fraction(0.3):
+                ShortSheetDetailView(place: selectedPlace)
+            case .large:
+                LongSheetDetailView(place: selectedPlace)
+            default:
+                ShortSheetDetailView(place: selectedPlace)
+            }
+        }
+    }
+    
+    
+    
+    
     var body: some View {
         
         @Bindable var locationManager = self.locationManager
@@ -23,13 +40,12 @@ struct DownTownMapView: View {
             ForEach(locationManager.places) { place in
                 
                 Annotation("",coordinate: place.coordinate) {
-                    Image(systemName: place.category.systemImageName)
-                        .font(.system(size: 30))
+                    PlaceAnnotationView(place: place)
+                        .environment(locationManager)
                         .onTapGesture {
                             locationManager.selectedPlace = place
                         }
                 }
-                
                 
             }
             
@@ -44,8 +60,7 @@ struct DownTownMapView: View {
         }
         .sheet(item: $locationManager.selectedPlace) { place in
             
-            Text(place.title)
-            
+            sheetDetailView
                 .presentationDetents([.fraction(0.3), .large], selection: $selectedDetents)
         }
     }

@@ -30,7 +30,7 @@ struct Place: Identifiable, Codable {
     }
     
     
-    init(title: String, description: String = "", category: Category, address: String = "", latitude : Double, longtitude : Double) {
+    init(title: String, description: String = "", category: Category, address: String = "", latitude : Double = 0.0, longtitude : Double = 0.0) {
         self.title = title
         self.description = description
         self.category = category
@@ -48,6 +48,8 @@ struct Place: Identifiable, Codable {
         self.latitude = mapItem.location.coordinate.latitude as Double
         self.longitude = mapItem.location.coordinate.longitude as Double
     }
+    
+    
     
     
     var coordinate: CLLocationCoordinate2D {
