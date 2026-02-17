@@ -10,8 +10,6 @@ import MapKit
 struct DownTownMapView: View {
     @Environment(LocationManager.self) var locationManager : LocationManager
     
-    @State var cameraPosition : MapCameraPosition = .region(MKCoordinateRegion(center: TownData.initialCoordinate, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)))
-    
     
     @State var selectedDetents : PresentationDetent = .fraction(0.3)
     
@@ -35,7 +33,7 @@ struct DownTownMapView: View {
     var body: some View {
         
         @Bindable var locationManager = self.locationManager
-        Map(initialPosition: cameraPosition) {
+        Map(position: $locationManager.cameraPosition) {
             
             ForEach(locationManager.places) { place in
                 
@@ -54,7 +52,7 @@ struct DownTownMapView: View {
                 .foregroundStyle(Color.blue.opacity(0.3))
             
         }
-        //.mapStyle(.imagery)
+        .mapStyle(locationManager.mapStyleOption.mapStyle)
         .onMapCameraChange {context in
             locationManager.region = context.region
         }

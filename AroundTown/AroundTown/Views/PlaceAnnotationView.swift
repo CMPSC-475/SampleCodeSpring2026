@@ -25,10 +25,10 @@ struct PlaceAnnotationView : View {
                 // Category icon with colored background
                 ZStack {
                     Circle()
-                        .fill(place.category.categoryColor.gradient)
+                        .fill(place.categoryColor.gradient)
                         .frame(width: 40, height: 40)
                     
-                    Image(systemName: place.category.systemImageName)
+                    Image(systemName: place.systemImageName)
                         .font(.system(size: 20, weight: .semibold))
                         .foregroundStyle(.white)
                         .symbolEffect(.bounce, value: isExpanded)

@@ -11,30 +11,25 @@ import MapKit
 
 @Observable
 class LocationManager {
+    
     var places : [Place] = []
-
-    
-    var region : MKCoordinateRegion = MKCoordinateRegion(center: TownData.initialCoordinate, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
-    
+    var region : MKCoordinateRegion = TownData.region
+    var cameraPosition : MapCameraPosition = .region(TownData.region)
     var selectedPlace: Place?
-    
     var mapStyleOption : MapStyleOption = .standard
-    
-    
+
     init() {
         loadFromJson()
     }
     
     
+    //MARK: Local Search
     func performSearch(on category: Category) {
-        
         places.removeAll()
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = category.rawValue
         request.region = region
-        
         let search = MKLocalSearch(request: request)
-        
         search.start { response, error in
             guard error == nil else {return}
             let mapItems = response!.mapItems

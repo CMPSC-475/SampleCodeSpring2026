@@ -115,7 +115,6 @@ struct LongSheetDetailView : View {
 
 }
 
-
 struct ShortSheetDetailView : View {
     let place : Place
     
@@ -149,7 +148,15 @@ struct ShortSheetDetailView : View {
         }
         .frame(maxWidth: .infinity)
     }
+}
 
+
+struct DirectionDetailsView : View {
+    @Environment(LocationManager.self) var manager : LocationManager
+    var body : some View {
+        //TODO: Show tab view for direction instructions
+        EmptyView()
+    }
 }
 
 

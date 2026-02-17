@@ -36,3 +36,15 @@ extension Category {
         }
     }
 }
+
+
+extension Optional where Wrapped == Category {
+    var categoryColor: Color {
+        switch self {
+        case .some(let category):
+            return category.categoryColor
+        case .none:
+            return .red   // default color for nil
+        }
+    }
+}

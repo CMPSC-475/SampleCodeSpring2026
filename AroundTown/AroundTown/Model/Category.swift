@@ -48,3 +48,27 @@ enum Category : String, CaseIterable, Codable {
     
 }
 
+
+extension Optional where Wrapped == Category {
+    var systemImageName: String {
+        switch self {
+        case .some(let category):
+            return category.systemImageName
+        case .none:
+            return "mappin.circle.fill"   // default image name for nil
+        }
+    }
+}
+
+
+extension Optional where Wrapped == Category {
+    var rawValue: String {
+        switch self {
+            case .some(let category):
+            return category.rawValue
+        case .none:
+            return "Dropped Pin"
+        }
+    }
+}
+

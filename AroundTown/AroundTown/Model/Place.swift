@@ -11,7 +11,7 @@ struct Place: Identifiable, Codable {
     var id = UUID()
     var title : String
     var description : String
-    var category : Category
+    var category : Category?
     var address : String
     var latitude : Double
     var longitude : Double
@@ -30,7 +30,7 @@ struct Place: Identifiable, Codable {
     }
     
     
-    init(title: String, description: String = "", category: Category, address: String = "", latitude : Double = 0.0, longtitude : Double = 0.0) {
+    init(title: String, description: String = "", category: Category?, address: String = "", latitude : Double = 0.0, longtitude : Double = 0.0) {
         self.title = title
         self.description = description
         self.category = category
@@ -50,10 +50,12 @@ struct Place: Identifiable, Codable {
     }
     
     
-    
-    
     var coordinate: CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
+    }
+    
+    var location : CLLocation {
+        CLLocation(latitude: latitude, longitude: longitude)
     }
 
 }
