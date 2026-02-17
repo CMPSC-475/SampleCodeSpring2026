@@ -33,34 +33,52 @@ struct DownTownMapView: View {
     var body: some View {
         
         @Bindable var locationManager = self.locationManager
-        Map(position: $locationManager.cameraPosition) {
-            
-            ForEach(locationManager.places) { place in
-                
-                Annotation("",coordinate: place.coordinate) {
-                    PlaceAnnotationView(place: place)
-                        .environment(locationManager)
-                        .onTapGesture {
-                            locationManager.selectedPlace = place
+        GeometryReader { proxy in
+            MapReader { reader in
+                Map(position: $locationManager.cameraPosition) {
+                    
+                    UserAnnotation()
+                    
+                    ForEach(locationManager.places) { place in
+                        
+                        Annotation("",coordinate: place.coordinate) {
+                            PlaceAnnotationView(place: place)
+                                .environment(locationManager)
+                                .onTapGesture {
+                                    locationManager.selectedPlace = place
+                                }
                         }
+                        
+                    }
+                    
+                    
+                    MapPolygon(coordinates: TownData.downtownCoordinates)
+                        .foregroundStyle(Color.blue.opacity(0.3))
+                    
                 }
-                
+                .gesture (
+                    LongPressGesture(minimumDuration: 0.5).sequenced(before: SpatialTapGesture()).onEnded { value in
+                        if case .second(true, let spatialTap?) = value {
+                            
+                            //TODO: Next class
+                            
+                        }
+                        
+                    }
+                                                                    
+                )
+                .mapStyle(locationManager.mapStyleOption.mapStyle)
+                .onMapCameraChange {context in
+                    locationManager.region = context.region
+                }
             }
-            
-            
-            MapPolygon(coordinates: TownData.downtownCoordinates)
-                .foregroundStyle(Color.blue.opacity(0.3))
-            
-        }
-        .mapStyle(locationManager.mapStyleOption.mapStyle)
-        .onMapCameraChange {context in
-            locationManager.region = context.region
         }
         .sheet(item: $locationManager.selectedPlace) { place in
             
             sheetDetailView
                 .presentationDetents([.fraction(0.3), .large], selection: $selectedDetents)
         }
+        
     }
 }
 

@@ -10,16 +10,24 @@ import MapKit
 
 
 @Observable
-class LocationManager {
+class LocationManager: NSObject, CLLocationManagerDelegate {
     
     var places : [Place] = []
     var region : MKCoordinateRegion = TownData.region
     var cameraPosition : MapCameraPosition = .region(TownData.region)
     var selectedPlace: Place?
     var mapStyleOption : MapStyleOption = .standard
+    
+    var cllocationManager : CLLocationManager
 
-    init() {
+    override init() {
+        
+        cllocationManager = CLLocationManager()
+        super.init()
         loadFromJson()
+        cllocationManager.delegate = self
+        cllocationManager.desiredAccuracy = kCLLocationAccuracyBest
+        
     }
     
     
