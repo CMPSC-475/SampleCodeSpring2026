@@ -1,69 +1,11 @@
 //
-//  SheetDetailViews.swift
-//  AroundTown
-//
-//  Created by Nader Alfares on 2/10/26.
-//
-
-//
 //  DetailViews.swift
 //  AroundTown
 //
 //  Created by Nader Alfares on 2/7/26.
 //
 import SwiftUI
-
-
-struct SheetHeaderView : View {
-    let place : Place
-    var body : some View {
-        HStack(alignment: .top, spacing: 16) {
-            // Category icon
-            ZStack {
-                Circle()
-                    .fill(place.category.categoryColor.gradient)
-                    .frame(width: 60, height: 60)
-                
-                Image(systemName: place.category.systemImageName)
-                    .font(.system(size: 28, weight: .semibold))
-                    .foregroundStyle(.white)
-            }
-            
-            VStack(alignment: .leading, spacing: 4) {
-                Text(place.title)
-                    .font(.title2)
-                    .fontWeight(.bold)
-                
-                Text(place.category.rawValue)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-            }
-            
-            Spacer()
-        }
-        .padding(.horizontal)
-    }
-    
-}
-
-struct SheetSectionView : View {
-    let place : Place
-    let title : String
-    let iconName: String
-    var body : some View {
-        // Description section
-        VStack(alignment: .leading, spacing: 8) {
-            Label(title, systemImage: iconName)
-                .font(.headline)
-                .foregroundStyle(place.category.categoryColor)
-            
-            Text(place.description)
-                .font(.body)
-                .foregroundStyle(.primary)
-        }
-        
-    }
-}
+import MapKit
 
 
 struct LongSheetDetailView : View {
@@ -73,22 +15,62 @@ struct LongSheetDetailView : View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 // Header with category icon and title
-                SheetHeaderView(place: place)
+                HStack(alignment: .top, spacing: 16) {
+                    // Category icon
+                    ZStack {
+                        Circle()
+                            .fill(place.category.categoryColor.gradient)
+                            .frame(width: 60, height: 60)
+                        
+                        Image(systemName: place.category.systemImageName)
+                            .font(.system(size: 28, weight: .semibold))
+                            .foregroundStyle(.white)
+                    }
+                    
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(place.title)
+                            .font(.title2)
+                            .fontWeight(.bold)
+                        
+                        Text(place.category.rawValue)
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
+                    
+                    Spacer()
+                }
+                .padding(.horizontal)
                 
                 Divider()
                 
                 // Description section
-                SheetSectionView(place: place, title: "About", iconName: "info.circle")
-                    .padding(.horizontal)
+                VStack(alignment: .leading, spacing: 8) {
+                    Label("About", systemImage: "info.circle")
+                        .font(.headline)
+                        .foregroundStyle(place.category.categoryColor)
+                    
+                    Text(place.description)
+                        .font(.body)
+                        .foregroundStyle(.primary)
+                }
+                .padding(.horizontal)
                 
                 // Address section
-                SheetSectionView(place: place, title: "Address", iconName: "mappin.and.ellipse")
-                    .padding(.horizontal)
+                VStack(alignment: .leading, spacing: 8) {
+                    Label("Address", systemImage: "mappin.and.ellipse")
+                        .font(.headline)
+                        .foregroundStyle(place.category.categoryColor)
+                    
+                    Text(place.address)
+                        .font(.body)
+                        .foregroundStyle(.secondary)
+                }
+                .padding(.horizontal)
                 
                 // Action buttons
                 HStack(spacing: 12) {
                     Button {
-                        //Get Directions
+                        // Open in Maps
                     } label: {
                         Label("Directions", systemImage: "arrow.triangle.turn.up.right.circle.fill")
                             .frame(maxWidth: .infinity)
@@ -102,8 +84,7 @@ struct LongSheetDetailView : View {
                         Label("Share", systemImage: "square.and.arrow.up")
                             .frame(maxWidth: .infinity)
                     }
-                    .buttonStyle(.borderedProminent)
-                    .tint(place.category.categoryColor)
+                    .buttonStyle(.bordered)
                 }
                 .padding(.horizontal)
                 
@@ -115,8 +96,13 @@ struct LongSheetDetailView : View {
 
 }
 
-struct ShortSheetDetailView : View {
+
+struct FractionSheetDetailView : View {
     let place : Place
+    @Environment(LocationManager.self) var manager
+    
+    
+    private let transportTypes : [MKDirectionsTransportType] = [.walking, .automobile, .cycling, .transit]
     
     var body : some View {
         VStack(spacing: 16) {
@@ -127,8 +113,31 @@ struct ShortSheetDetailView : View {
                 .padding(.top, 8)
             
             // Header with icon and title
-            SheetHeaderView(place: place)
-                .padding(.horizontal)
+            HStack(spacing: 12) {
+                // Category icon
+                ZStack {
+                    Circle()
+                        .fill(place.category.categoryColor.gradient)
+                        .frame(width: 50, height: 50)
+                    
+                    Image(systemName: place.category.systemImageName)
+                        .font(.system(size: 22, weight: .semibold))
+                        .foregroundStyle(.white)
+                }
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(place.title)
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                    
+                    Text(place.category.rawValue)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+                
+                Spacer()
+            }
+            .padding(.horizontal)
             
             // Address
             HStack {
@@ -144,21 +153,106 @@ struct ShortSheetDetailView : View {
             }
             .padding(.horizontal)
             
+            // Transport type buttons
+            HStack(spacing: 12) {
+                ForEach(transportTypes.enumerated(), id: \.offset) {_, type in
+                    DirectionSheetButton(transportType: type, tint: place.category.categoryColor) {
+//                        manager.provideDirections(for: place, type)
+                    }
+                }
+            }
+            .padding(.horizontal)
+            
             Spacer()
         }
-        .frame(maxWidth: .infinity)
     }
+
+}
+
+
+struct DirectionSheetButton : View {
+    var transportType : MKDirectionsTransportType
+    var tint : Color
+    var action : () -> Void
+
+    private var imageName : String {
+        switch transportType {
+        case .automobile:
+            return "car.fill"
+        case .walking:
+            return "figure.walk"
+        case .transit:
+            return "bus.fill"
+        case .cycling:
+            return "figure.outdoor.cycle"
+        default:
+            return "questionmark.circle"
+        }
+    }
+    
+    
+    
+    var body : some View {
+        Button {
+            action()
+        } label: {
+            Image(systemName: imageName)
+                .font(.system(size: 15, weight: .semibold))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 8)
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(tint)
+                        .frame(width: 80, height: 50)
+                )
+                .foregroundStyle(.white)
+        }
+
+        
+    }
+}
+
+private struct FractionSheetDetailView_PreviewContainer: View {
+    @Environment(LocationManager.self) var manager
+    @State private var selectedDetent: PresentationDetent = .fraction(0.3)
+    
+    @ViewBuilder
+    func detailSheet(for place: Place) -> some View {
+        switch selectedDetent {
+        case .fraction(0.3):
+            FractionSheetDetailView(place: place)
+        case .large:
+            LongSheetDetailView(place: place)
+        default:
+            Text("Error")
+        }
+    }
+    
+    var body: some View {
+        Text("Map")
+            .sheet(isPresented: .constant(true)) {
+                detailSheet(for: manager.places.first!)
+                    .presentationDetents([
+                        .fraction(0.3),
+                        .large
+                    ], selection: $selectedDetent)
+            }
+    }
+}
+
+
+#Preview {
+    FractionSheetDetailView_PreviewContainer()
+        .environment(LocationManager())
 }
 
 
 struct DirectionDetailsView : View {
     @Environment(LocationManager.self) var manager : LocationManager
+    
     var body : some View {
-        //TODO: Show tab view for direction instructions
-        EmptyView()
+        //TODO: - display directions
     }
 }
-
-
 
 

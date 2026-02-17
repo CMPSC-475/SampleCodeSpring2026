@@ -18,11 +18,11 @@ struct DownTownMapView: View {
         if let selectedPlace = locationManager.selectedPlace {
             switch selectedDetents {
             case .fraction(0.3):
-                ShortSheetDetailView(place: selectedPlace)
+                FractionSheetDetailView(place: selectedPlace)
             case .large:
                 LongSheetDetailView(place: selectedPlace)
             default:
-                ShortSheetDetailView(place: selectedPlace)
+                FractionSheetDetailView(place: selectedPlace)
             }
         }
     }
