@@ -13,6 +13,8 @@ struct DownTownMapView: View {
     
     @State var selectedDetents : PresentationDetent = .fraction(0.3)
     
+    @State var droppedPin : Place?
+    
     @ViewBuilder
     var sheetDetailView : some View {
         if let selectedPlace = locationManager.selectedPlace {
@@ -37,6 +39,21 @@ struct DownTownMapView: View {
             MapReader { reader in
                 Map(position: $locationManager.cameraPosition) {
                     
+                    // check if there is a droppedPin by the user
+                    if let droppedPin = droppedPin {
+                        Annotation("",coordinate: droppedPin.coordinate) {
+                            PlaceAnnotationView(place: droppedPin)
+                        }
+                    }
+                    
+                    // check if directions were asked for and plot polylines
+                    if let route = locationManager.route {
+                        MapPolyline(route.polyline)
+                            .stroke(.blue, lineWidth: 5)
+                    }
+                    
+                    
+                    
                     UserAnnotation()
                     
                     ForEach(locationManager.places) { place in
@@ -44,9 +61,6 @@ struct DownTownMapView: View {
                         Annotation("",coordinate: place.coordinate) {
                             PlaceAnnotationView(place: place)
                                 .environment(locationManager)
-                                .onTapGesture {
-                                    locationManager.selectedPlace = place
-                                }
                         }
                         
                     }
@@ -58,14 +72,16 @@ struct DownTownMapView: View {
                 }
                 .gesture (
                     LongPressGesture(minimumDuration: 0.5).sequenced(before: SpatialTapGesture()).onEnded { value in
-                        if case .second(true, let spatialTap?) = value {
-                            
-                            //TODO: Next class
-                            
+                        if case .second(true, let spatialTap?) = value,
+                           let coordinate = reader.convert(spatialTap.location, from: .local) {
+                            withAnimation {
+                                droppedPin = Place(title: "Dropped Pin", category: nil , latitude: coordinate.latitude, longtitude: coordinate.longitude)
+                                locationManager.selectedPlace = droppedPin
+                            }
                         }
                         
                     }
-                                                                    
+                    
                 )
                 .mapStyle(locationManager.mapStyleOption.mapStyle)
                 .onMapCameraChange {context in
@@ -75,8 +91,15 @@ struct DownTownMapView: View {
         }
         .sheet(item: $locationManager.selectedPlace) { place in
             
-            sheetDetailView
-                .presentationDetents([.fraction(0.3), .large], selection: $selectedDetents)
+            if let _ = locationManager.directions {
+                DirectionDetailsView()
+                    .presentationDetents([.fraction(0.3)], selection: $selectedDetents)
+                
+            }
+            else {
+                sheetDetailView
+                    .presentationDetents([.fraction(0.3), .large], selection: $selectedDetents)
+            }
         }
         
     }

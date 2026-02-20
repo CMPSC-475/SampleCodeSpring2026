@@ -157,7 +157,7 @@ struct FractionSheetDetailView : View {
             HStack(spacing: 12) {
                 ForEach(transportTypes.enumerated(), id: \.offset) {_, type in
                     DirectionSheetButton(transportType: type, tint: place.category.categoryColor) {
-//                        manager.provideDirections(for: place, type)
+                        manager.provideDirections(for: place, type)
                     }
                 }
             }
@@ -251,7 +251,20 @@ struct DirectionDetailsView : View {
     @Environment(LocationManager.self) var manager : LocationManager
     
     var body : some View {
-        //TODO: - display directions
+        if let directions = manager.directions {
+            VStack {
+                TabView {
+                    ForEach(directions, id:\.self) { dir in
+                        Text(dir.instructions)
+                    }
+                }
+                .tabViewStyle(.page)
+                Button("Cancel Trip", role: .destructive) {
+                    manager.directions = nil
+                    manager.route = nil
+                }
+            }
+        }
     }
 }
 

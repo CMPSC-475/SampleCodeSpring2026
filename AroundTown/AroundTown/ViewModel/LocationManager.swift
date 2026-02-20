@@ -13,6 +13,9 @@ import MapKit
 class LocationManager: NSObject, CLLocationManagerDelegate {
     
     var places : [Place] = []
+    var route : MKRoute?
+    var directions: [MKRoute.Step]?
+
     var region : MKCoordinateRegion = TownData.region
     var cameraPosition : MapCameraPosition = .region(TownData.region)
     var selectedPlace: Place?
@@ -44,6 +47,28 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
             for item in mapItems {
                 let place = Place(mapItem: item, category: category)
                 self.places.append(place)
+            }
+        }
+    }
+    
+    
+    
+    //MARK: - Directions
+    func provideDirections(for place:Place,_ transportType : MKDirectionsTransportType = .walking)  {
+        
+        let request = MKDirections.Request()
+        request.source = MKMapItem.forCurrentLocation()
+        request.destination = MKMapItem(location: place.location, address: nil)
+        request.transportType = transportType
+        request.requestsAlternateRoutes = true
+        
+        let directions = MKDirections(request: request)
+        directions.calculate { (response, error) in
+            guard (error == nil) else {print(error!.localizedDescription); return}
+            if let r = response?.routes.first {
+                self.route = r
+                self.directions = r.steps
+                
             }
         }
     }
