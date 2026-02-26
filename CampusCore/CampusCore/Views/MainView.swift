@@ -94,7 +94,7 @@ struct CustomTextField: View {
 // MARK: - User List View
 struct UserListView: View {
     let selectedRole: UserRole
-    private var users: [User]
+    @Query private var users: [User]
     
     private var roleColor: Color {
         switch selectedRole {
@@ -106,8 +106,14 @@ struct UserListView: View {
     
     init(selectedRole: UserRole) {
         self.selectedRole = selectedRole
-        self.users = []
-        //TODO: query for users with selected role
+        
+        let roleRawValue = selectedRole.rawValue
+        let filter = #Predicate<User> { user in
+            user.roleRawValue == roleRawValue
+        }
+        let sortDescriptor = [SortDescriptor(\User.name, order: .forward)]
+        
+        _users = Query(filter: filter, sort: sortDescriptor)
     }
 
     

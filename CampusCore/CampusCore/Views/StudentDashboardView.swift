@@ -12,13 +12,17 @@ struct StudentDashboardView: View {
     
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Course.code) private var allCourses: [Course]
-    private var enrollments: [Enrollment]
+    @Query private var enrollments: [Enrollment]
     
     
     init(student: User) {
         self.student = student
-        self.enrollments = []
-        //TODO: filter query enrollments for given student
+        let studentID = student.id
+        let filter = #Predicate<Enrollment> { enrollment in
+            enrollment.student.id == studentID
+        }
+        
+        _enrollments = Query(filter: filter)
     }
     
     
@@ -246,7 +250,10 @@ struct StudentCourseDetailView: View {
     }
     
     private func unenroll() {
-        //TODO: unenroll
+        if let enrollment = student.enrollments.first(where: { $0.course.id == course.id }) {
+            modelContext.delete(enrollment)
+            try? modelContext.save()
+        }
     }
 }
 
@@ -357,7 +364,12 @@ struct BrowseCoursesView: View {
     }
     
     private func enrollInCourse(_ course: Course) {
-        //TODO: enroll in course
+        
+        let enrollment = Enrollment(student: student, course: course)
+        modelContext.insert(enrollment)
+        try? modelContext.save()
+        
+        
     }
 }
 
