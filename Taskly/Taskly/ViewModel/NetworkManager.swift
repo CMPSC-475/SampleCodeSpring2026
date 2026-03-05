@@ -14,19 +14,89 @@ class NetworkManager {
     
     // MARK: - Get Tasks
     func getTasks() async throws -> [TasklyItem] {
-        //TODO: - implement getting tasks from api endpoint
-        return []
+        guard let url = URL(string: "\(ipAddress)/tasks") else {
+            throw NetworkError.invalidURL
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "accept")
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw NetworkError.invalidResponse
+        }
+        
+        guard (200...299).contains(httpResponse.statusCode) else {
+            throw NetworkError.invalidResponse
+        }
+        
+        let decoder = JSONDecoder()
+        return try decoder.decode([TasklyItem].self, from: data)
     }
     
     // MARK: - Create Task
     
     func createTask(title: String, description: String) async throws -> TasklyItem {
-        //TODO: - implement sending created tasks to api endpoint
-        return TasklyItem()
+        guard let url = URL(string: "\(ipAddress)/tasks") else {
+            throw NetworkError.invalidURL
+        }
+        
+        let taskID = UUID().uuidString
+        let taskData : [String: Any] = [
+            "id": taskID,
+            "title": title,
+            "description": description,
+            "completed": false
+        ]
+        
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "accept")
+        request.setValue("application/json", forHTTPHeaderField: "content-type")
+        
+        request.httpBody = try JSONSerialization.data(withJSONObject: taskData, options: [])
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw NetworkError.invalidResponse
+        }
+        
+        guard (200...299).contains(httpResponse.statusCode) else {
+            throw NetworkError.invalidResponse
+        }
+        
+        
+        let decoder = JSONDecoder()
+        let createdTask = try decoder.decode(TasklyItem.self, from: data)
+        return createdTask
     }
     
     func deleteTask(taskId: String) async throws {
         //TODO: - implment deleting a task
+        guard let url = URL(string: "\(ipAddress)/tasks") else {
+            throw NetworkError.invalidURL
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        request.setValue("*/*", forHTTPHeaderField: "accept")
+        
+        let (_, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw NetworkError.invalidResponse
+        }
+        
+        guard (200...299).contains(httpResponse.statusCode) else {
+            throw NetworkError.invalidResponse
+        }
+        
+        
+        
     }
     
     // MARK: - Mark Task as Complete/Incomplete

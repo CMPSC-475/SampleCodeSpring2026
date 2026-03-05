@@ -4,7 +4,24 @@ from pickledb import PickleDB
 from contextlib import asynccontextmanager
 
 tasks = []
-app = FastAPI()
+
+db = PickleDB("tasks.db")
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    global db
+    await db.load()
+    if db is None:
+        db = PickleDB("tasks.db")
+        db.set("tasks", [])
+        db.save()
+    yield
+    db.save()
+    print("Goodbye!")
+
+
+app = FastAPI(lifespan=lifespan)
 
 
 class Task(BaseModel):
@@ -15,23 +32,26 @@ class Task(BaseModel):
 
 
 @app.get("/tasks")
-def get_tasks():
-    global tasks
+async def get_tasks():
+    tasks = await db.get("tasks") or []
     return tasks
 
 @app.post("/tasks")
 async def create_task(task: Task):
-    global tasks
+    tasks = await db.get("tasks") or []
     tasks.append(task.model_dump())
+    await db.set("tasks", tasks)
+    await db.save()
     return task
 
 @app.delete("/tasks/{task_id}")
 async def delete_task(task_id: str):
-    global tasks
+    tasks = await db.get("tasks") or []
     for i, t in enumerate(tasks):
         if t["id"] == task_id:
             tasks.pop(i)
-            return {"msg": "Task deleted successfully"}
+            await db.set("tasks", tasks)
+            await db.save()
     raise HTTPException(status_code=404, detail="Task not found")
 
 

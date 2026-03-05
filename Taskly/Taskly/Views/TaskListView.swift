@@ -21,6 +21,7 @@ struct TaskListView: View {
                 .listRowBackground(taskRowBackground)
             }
             .onDelete(perform: onDeleteTask)
+            
         }
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
