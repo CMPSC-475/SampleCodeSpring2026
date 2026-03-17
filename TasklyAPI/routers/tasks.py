@@ -1,3 +1,4 @@
+from operator import ne
 from uuid import uuid4
 
 from fastapi import APIRouter, HTTPException, Depends, status
@@ -10,15 +11,25 @@ router = APIRouter()
 
 
 @router.get("/tasks", tags=["tasks"])
-async def get_tasks():
-    #TODO: Implement get tasks
-    return {"message": "Tasks not implemented"}
+async def get_tasks(current_user: User = Depends(get_current_user)):
+    tasks = await get_all_tasks()
+    user_tasks = [t for t in tasks if current_user.id == t.owner_id]
+    return user_tasks
 
 
 @router.post("/tasks", tags=["tasks"])
-async def create_task(task: TaskCreate):
-    #TODO: Implement create task
-    return {"message": "Create task not implemented"}
+async def create_task(task: TaskCreate, current_user : User = Depends(get_current_user)):
+    tasks = await get_all_tasks()
+    new_task = Task(
+        id= str(uuid4()),
+        title= task.title,
+        description=task.description,
+        completed=False,
+        owner_id=current_user.id
+    )
+    tasks.append(new_task)
+    await save_tasks(tasks)
+    return new_task
 
 
 @router.put("/tasks/{task_id}", tags=["tasks"])

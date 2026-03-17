@@ -9,11 +9,22 @@ import SwiftUI
 
 @main
 struct TasklyApp: App {
-    @State var networkManager : NetworkManager = NetworkManager()
+    @State var authManager = AuthManager()
+    @State var networkManager = NetworkManager()
+    
+    init() {
+        // Configure network manager with auth manager after initialization
+        // Note: This happens during init, so we'll handle it in the body
+    }
+    
     var body: some Scene {
         WindowGroup {
-            MainView()
+            AuthContainerView()
+                .environment(authManager)
                 .environment(networkManager)
+                .onAppear {
+                    networkManager.configure(authManager: authManager)
+                }
         }
     }
 }

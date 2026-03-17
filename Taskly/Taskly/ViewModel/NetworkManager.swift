@@ -11,6 +11,81 @@ import SwiftUI
 class NetworkManager {
     
     var ipAddress: String = "http://localhost:8000"
+    private var authManager: AuthManager?
+    
+    // MARK: - Configuration
+    
+    func configure(authManager: AuthManager) {
+        self.authManager = authManager
+    }
+    
+    // MARK: - Authentication Methods
+    
+    func signup(email: String, password: String) async throws -> TokenResponse {
+        guard let url = URL(string: "\(ipAddress)/signup") else {
+            throw NetworkError.invalidURL
+        }
+        
+        let payload = SignupRequest(email: email, password: password)
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "accept")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let encoder = JSONEncoder()
+        request.httpBody = try encoder.encode(payload)
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw NetworkError.invalidResponse
+        }
+        
+        if httpResponse.statusCode == 400 {
+            throw NetworkError.emailAlreadyRegistered
+        }
+        
+        guard (200...299).contains(httpResponse.statusCode) else {
+            throw NetworkError.httpError(statusCode: httpResponse.statusCode)
+        }
+        
+        let decoder = JSONDecoder()
+        return try decoder.decode(TokenResponse.self, from: data)
+    }
+    
+    func login(email: String, password: String) async throws -> TokenResponse {
+        guard let url = URL(string: "\(ipAddress)/login") else {
+            throw NetworkError.invalidURL
+        }
+        
+        let payload = LoginRequest(email: email, password: password)
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "accept")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let encoder = JSONEncoder()
+        request.httpBody = try encoder.encode(payload)
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw NetworkError.invalidResponse
+        }
+        
+        if httpResponse.statusCode == 401 {
+            throw NetworkError.invalidCredentials
+        }
+        
+        guard (200...299).contains(httpResponse.statusCode) else {
+            throw NetworkError.httpError(statusCode: httpResponse.statusCode)
+        }
+        
+        let decoder = JSONDecoder()
+        return try decoder.decode(TokenResponse.self, from: data)
+    }
     
     // MARK: - Get Tasks
     func getTasks() async throws -> [TasklyItem] {
@@ -22,10 +97,19 @@ class NetworkManager {
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "accept")
         
+        // Add authorization header
+        if let token = authManager?.accessToken {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        
         let (data, response) = try await URLSession.shared.data(for: request)
         
         guard let httpResponse = response as? HTTPURLResponse else {
             throw NetworkError.invalidResponse
+        }
+        
+        if httpResponse.statusCode == 401 {
+            throw NetworkError.unauthorized
         }
         
         guard (200...299).contains(httpResponse.statusCode) else {
@@ -43,12 +127,9 @@ class NetworkManager {
             throw NetworkError.invalidURL
         }
         
-        let taskID = UUID().uuidString
         let taskData : [String: Any] = [
-            "id": taskID,
             "title": title,
-            "description": description,
-            "completed": false
+            "description": description
         ]
         
         
@@ -57,12 +138,21 @@ class NetworkManager {
         request.setValue("application/json", forHTTPHeaderField: "accept")
         request.setValue("application/json", forHTTPHeaderField: "content-type")
         
+        // Add authorization header
+        if let token = authManager?.accessToken {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        
         request.httpBody = try JSONSerialization.data(withJSONObject: taskData, options: [])
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
         guard let httpResponse = response as? HTTPURLResponse else {
             throw NetworkError.invalidResponse
+        }
+        
+        if httpResponse.statusCode == 401 {
+            throw NetworkError.unauthorized
         }
         
         guard (200...299).contains(httpResponse.statusCode) else {
@@ -76,8 +166,7 @@ class NetworkManager {
     }
     
     func deleteTask(taskId: String) async throws {
-        //TODO: - implment deleting a task
-        guard let url = URL(string: "\(ipAddress)/tasks") else {
+        guard let url = URL(string: "\(ipAddress)/tasks/\(taskId)") else {
             throw NetworkError.invalidURL
         }
         
@@ -85,18 +174,24 @@ class NetworkManager {
         request.httpMethod = "DELETE"
         request.setValue("*/*", forHTTPHeaderField: "accept")
         
+        // Add authorization header
+        if let token = authManager?.accessToken {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        
         let (_, response) = try await URLSession.shared.data(for: request)
         
         guard let httpResponse = response as? HTTPURLResponse else {
             throw NetworkError.invalidResponse
         }
         
+        if httpResponse.statusCode == 401 {
+            throw NetworkError.unauthorized
+        }
+        
         guard (200...299).contains(httpResponse.statusCode) else {
             throw NetworkError.invalidResponse
         }
-        
-        
-        
     }
     
     // MARK: - Mark Task as Complete/Incomplete
@@ -114,12 +209,21 @@ class NetworkManager {
         request.httpMethod = "PATCH"
         request.setValue("application/json", forHTTPHeaderField: "accept")
         
+        // Add authorization header
+        if let token = authManager?.accessToken {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        
         // Perform the request
         let (_, response) = try await URLSession.shared.data(for: request)
         
         // Check the response
         guard let httpResponse = response as? HTTPURLResponse else {
             throw NetworkError.invalidResponse
+        }
+        
+        if httpResponse.statusCode == 401 {
+            throw NetworkError.unauthorized
         }
         
         guard (200...299).contains(httpResponse.statusCode) else {
@@ -146,6 +250,11 @@ class NetworkManager {
         request.setValue("application/json", forHTTPHeaderField: "accept")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
+        // Add authorization header
+        if let token = authManager?.accessToken {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        
         // Encode the body
         request.httpBody = try JSONSerialization.data(withJSONObject: taskData)
         
@@ -155,6 +264,10 @@ class NetworkManager {
         // Check the response
         guard let httpResponse = response as? HTTPURLResponse else {
             throw NetworkError.invalidResponse
+        }
+        
+        if httpResponse.statusCode == 401 {
+            throw NetworkError.unauthorized
         }
         
         guard (200...299).contains(httpResponse.statusCode) else {
@@ -174,6 +287,9 @@ class NetworkManager {
         case invalidURL
         case invalidResponse
         case httpError(statusCode: Int)
+        case unauthorized
+        case invalidCredentials
+        case emailAlreadyRegistered
         
         var errorDescription: String? {
             switch self {
@@ -183,6 +299,12 @@ class NetworkManager {
                 return "The server response was invalid."
             case .httpError(let statusCode):
                 return "Request failed with status code: \(statusCode)"
+            case .unauthorized:
+                return "You need to log in to access this resource."
+            case .invalidCredentials:
+                return "Invalid email or password."
+            case .emailAlreadyRegistered:
+                return "This email is already registered."
             }
         }
     }

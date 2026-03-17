@@ -12,5 +12,13 @@ struct TasklyItem: Identifiable, Codable {
     var title: String = ""
     var description: String = ""
     var completed: Bool = false
+    var ownerId: String = ""
     
+    enum CodingKeys: String, CodingKey {
+        case id
+        case title
+        case description
+        case completed
+        case ownerId = "owner_id"
+    }
 }

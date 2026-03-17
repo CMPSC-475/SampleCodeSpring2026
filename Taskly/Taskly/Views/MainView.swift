@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     @Environment(NetworkManager.self) var networkManager
+    @Environment(AuthManager.self) var authManager
     @State private var tasks: [TasklyItem] = []
     @State private var isLoading = false
     @State private var errorMessage: String?
@@ -16,6 +17,7 @@ struct MainView: View {
     @State private var showAddTask = false
     @State private var newTaskTitle = ""
     @State private var newTaskDescription = ""
+    @State private var showLogoutConfirmation = false
     
     var body: some View {
         NavigationStack {
@@ -46,6 +48,14 @@ struct MainView: View {
             } message: {
                 Text(errorMessage ?? "An unknown error occurred")
             }
+            .alert("Log Out", isPresented: $showLogoutConfirmation) {
+                Button("Cancel", role: .cancel) { }
+                Button("Log Out", role: .destructive) {
+                    logout()
+                }
+            } message: {
+                Text("Are you sure you want to log out?")
+            }
             .sheet(isPresented: $showAddTask) { addTaskSheet }
         }
         .tint(.pennStateBlue)
@@ -72,13 +82,23 @@ struct MainView: View {
         }
         
         ToolbarItem(placement: .topBarTrailing) {
-            Button {
-                showAddTask = true
-            } label: {
-                Image(systemName: "plus.circle.fill")
-                    .font(.title2)
-                    .foregroundStyle(.white)
-                    .symbolRenderingMode(.hierarchical)
+            HStack(spacing: 16) {
+                Button {
+                    showLogoutConfirmation = true
+                } label: {
+                    Image(systemName: "rectangle.portrait.and.arrow.right")
+                        .font(.title3)
+                        .foregroundStyle(.white)
+                }
+                
+                Button {
+                    showAddTask = true
+                } label: {
+                    Image(systemName: "plus.circle.fill")
+                        .font(.title2)
+                        .foregroundStyle(.white)
+                        .symbolRenderingMode(.hierarchical)
+                }
             }
         }
     }
@@ -180,7 +200,8 @@ struct MainView: View {
             id: tasks[index].id,
             title: tasks[index].title,
             description: tasks[index].description,
-            completed: completed
+            completed: completed,
+            ownerId: tasks[index].ownerId
         )
     }
     
@@ -190,12 +211,24 @@ struct MainView: View {
     }
     
     private func handleError(_ message: String, error: Error) {
+        // Check if error is unauthorized
+        if case NetworkManager.NetworkError.unauthorized = error {
+            authManager.logout()
+            return
+        }
+        
         errorMessage = "\(message): \(error.localizedDescription)"
         showError = true
+    }
+    
+    private func logout() {
+        authManager.logout()
+        tasks = []
     }
 }
 
 #Preview {
     MainView()
         .environment(NetworkManager())
+        .environment(AuthManager())
 }
