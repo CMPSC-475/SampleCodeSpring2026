@@ -1,5 +1,5 @@
 //
-//  LoginView.swift
+//  SignupView.swift
 //  Taskly
 //
 //  Created by Nader Alfares on 3/16/26.
@@ -7,16 +7,17 @@
 
 import SwiftUI
 
-struct LoginView: View {
+struct SignupView: View {
     @Environment(NetworkManager.self) private var networkManager
     @Environment(AuthManager.self) private var authManager
+    @Environment(\.dismiss) private var dismiss
     
     @State private var email = ""
     @State private var password = ""
+    @State private var confirmPassword = ""
     @State private var isLoading = false
     @State private var showError = false
     @State private var errorMessage = ""
-    @State private var showSignup = false
     
     var body: some View {
         NavigationStack {
@@ -34,18 +35,17 @@ struct LoginView: View {
                     
                     // Logo/Title
                     VStack(spacing: 10) {
-                        Image(systemName: "checkmark.circle.fill")
+                        Image(systemName: "person.circle.fill")
                             .font(.system(size: 80))
                             .foregroundStyle(.white)
                         
-                        Text("Taskly")
-                            .font(.system(size: 48, weight: .bold))
+                        Text("Create Account")
+                            .font(.system(size: 36, weight: .bold))
                             .foregroundStyle(.white)
                     }
                     
-                    Spacer()
                     
-                    // Login Form
+                    // Signup Form
                     VStack(spacing: 20) {
                         // Email Field
                         VStack(alignment: .leading, spacing: 8) {
@@ -72,14 +72,33 @@ struct LoginView: View {
                                 .textFieldStyle(AuthTextFieldStyle())
                         }
                         
-                        // Login Button
-                        Button(action: login) {
+                        // Confirm Password Field
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Confirm Password")
+                                .font(.subheadline)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(.white)
+                            
+                            SecureField("", text: $confirmPassword)
+                                .textFieldStyle(AuthTextFieldStyle())
+                        }
+                        
+                        // Error message for password mismatch
+                        if !password.isEmpty && !confirmPassword.isEmpty && password != confirmPassword {
+                            Text("Passwords don't match")
+                                .font(.caption)
+                                .foregroundStyle(.red)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        
+                        // Sign Up Button
+                        Button(action: signup) {
                             HStack {
                                 if isLoading {
                                     ProgressView()
                                         .tint(.pennStateBlue)
                                 } else {
-                                    Text("Log In")
+                                    Text("Sign Up")
                                         .fontWeight(.semibold)
                                 }
                             }
@@ -89,25 +108,23 @@ struct LoginView: View {
                             .foregroundStyle(Color.pennStateBlue)
                             .clipShape(RoundedRectangle(cornerRadius: 12))
                         }
-                        .disabled(isLoading || email.isEmpty || password.isEmpty)
-                        
-                        // Sign Up Link
-                        Button {
-                            showSignup = true
-                        } label: {
-                            HStack(spacing: 4) {
-                                Text("Don't have an account?")
-                                    .foregroundStyle(.white.opacity(0.9))
-                                Text("Sign Up")
-                                    .fontWeight(.semibold)
-                                    .foregroundStyle(.white)
-                            }
-                            .font(.subheadline)
-                        }
+                        .disabled(isLoading || !isValidForm)
                     }
                     .padding(.horizontal, 30)
                     
                     Spacer()
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.title2)
+                            .foregroundStyle(.white)
+                            .symbolRenderingMode(.hierarchical)
+                    }
                 }
             }
             .alert("Error", isPresented: $showError) {
@@ -115,43 +132,28 @@ struct LoginView: View {
             } message: {
                 Text(errorMessage)
             }
-            .sheet(isPresented: $showSignup) {
-                SignupView()
-            }
         }
+    }
+    
+    // MARK: - Computed Properties
+    
+    private var isValidForm: Bool {
+        !email.isEmpty && 
+        !password.isEmpty && 
+        !confirmPassword.isEmpty && 
+        password == confirmPassword &&
+        password.count >= 6
     }
     
     // MARK: - Actions
     
-    private func login() {
-        Task {
-            isLoading = true
-            defer { isLoading = false }
-            
-            do {
-                let response = try await networkManager.login(email: email, password: password)
-                authManager.setToken(response.accessToken)
-            } catch {
-                errorMessage = error.localizedDescription
-                showError = true
-            }
-        }
-    }
-}
-
-// MARK: - Custom Text Field Style
-
-struct AuthTextFieldStyle: TextFieldStyle {
-    func _body(configuration: TextField<Self._Label>) -> some View {
-        configuration
-            .padding()
-            .background(.white)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
+    private func signup() {
+        //TODO: signup action
     }
 }
 
 #Preview {
-    LoginView()
+    SignupView()
         .environment(NetworkManager())
         .environment(AuthManager())
 }

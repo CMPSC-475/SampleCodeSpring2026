@@ -75,21 +75,18 @@ struct MainView: View {
     @ToolbarContentBuilder
     private var toolbar: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
-            if isLoading {
-                ProgressView()
-                    .tint(.white)
+            Button {
+                showLogoutConfirmation = true
+            } label: {
+                Image(systemName: "pip.exit")
+                    .font(.title3)
+                    .foregroundStyle(.white)
             }
         }
         
         ToolbarItem(placement: .topBarTrailing) {
             HStack(spacing: 16) {
-                Button {
-                    showLogoutConfirmation = true
-                } label: {
-                    Image(systemName: "rectangle.portrait.and.arrow.right")
-                        .font(.title3)
-                        .foregroundStyle(.white)
-                }
+                
                 
                 Button {
                     showAddTask = true
@@ -116,7 +113,6 @@ struct MainView: View {
     }
     
     // MARK: - Actions
-    
     private func loadTasks() {
         Task {
             await loadTasksAsync()
@@ -213,7 +209,8 @@ struct MainView: View {
     private func handleError(_ message: String, error: Error) {
         // Check if error is unauthorized
         if case NetworkManager.NetworkError.unauthorized = error {
-            authManager.logout()
+            //TODO: uncomment for logout
+            //authManager.logout()
             return
         }
         
@@ -222,13 +219,18 @@ struct MainView: View {
     }
     
     private func logout() {
-        authManager.logout()
+        //TODO: uncomment for logout
+        //authManager.logout()
         tasks = []
     }
 }
 
-#Preview {
-    MainView()
-        .environment(NetworkManager())
-        .environment(AuthManager())
-}
+//#Preview {
+//    let networkManager = NetworkManager()
+//    let authManager = AuthManager()
+//    authManager.setToken("set token")
+//    networkManager.configure(authManager: authManager)
+//    return MainView()
+//        .environment(networkManager)
+//        .environment(authManager)
+//}

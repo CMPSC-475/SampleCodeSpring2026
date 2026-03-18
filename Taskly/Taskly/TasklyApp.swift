@@ -12,11 +12,6 @@ struct TasklyApp: App {
     @State var authManager = AuthManager()
     @State var networkManager = NetworkManager()
     
-    init() {
-        // Configure network manager with auth manager after initialization
-        // Note: This happens during init, so we'll handle it in the body
-    }
-    
     var body: some Scene {
         WindowGroup {
             AuthContainerView()

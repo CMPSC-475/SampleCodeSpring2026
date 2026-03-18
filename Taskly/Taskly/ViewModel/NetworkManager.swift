@@ -14,13 +14,11 @@ class NetworkManager {
     private var authManager: AuthManager?
     
     // MARK: - Configuration
-    
     func configure(authManager: AuthManager) {
         self.authManager = authManager
     }
     
     // MARK: - Authentication Methods
-    
     func signup(email: String, password: String) async throws -> TokenResponse {
         guard let url = URL(string: "\(ipAddress)/signup") else {
             throw NetworkError.invalidURL
@@ -97,10 +95,7 @@ class NetworkManager {
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "accept")
         
-        // Add authorization header
-        if let token = authManager?.accessToken {
-            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        }
+        //TODO: add auth header
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
@@ -138,10 +133,7 @@ class NetworkManager {
         request.setValue("application/json", forHTTPHeaderField: "accept")
         request.setValue("application/json", forHTTPHeaderField: "content-type")
         
-        // Add authorization header
-        if let token = authManager?.accessToken {
-            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        }
+        //TODO: add auth header
         
         request.httpBody = try JSONSerialization.data(withJSONObject: taskData, options: [])
         
@@ -174,10 +166,7 @@ class NetworkManager {
         request.httpMethod = "DELETE"
         request.setValue("*/*", forHTTPHeaderField: "accept")
         
-        // Add authorization header
-        if let token = authManager?.accessToken {
-            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        }
+        //TODO: add auth header
         
         let (_, response) = try await URLSession.shared.data(for: request)
         
@@ -209,10 +198,7 @@ class NetworkManager {
         request.httpMethod = "PATCH"
         request.setValue("application/json", forHTTPHeaderField: "accept")
         
-        // Add authorization header
-        if let token = authManager?.accessToken {
-            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        }
+        //TODO: add auth header
         
         // Perform the request
         let (_, response) = try await URLSession.shared.data(for: request)
@@ -250,10 +236,7 @@ class NetworkManager {
         request.setValue("application/json", forHTTPHeaderField: "accept")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        // Add authorization header
-        if let token = authManager?.accessToken {
-            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        }
+        //TODO: add auth header
         
         // Encode the body
         request.httpBody = try JSONSerialization.data(withJSONObject: taskData)
@@ -275,14 +258,8 @@ class NetworkManager {
         }
     }
     
-    // MARK: - Delete Task
-    
-
-    
-
     
     // MARK: - Network Errors
-    
     enum NetworkError: LocalizedError {
         case invalidURL
         case invalidResponse

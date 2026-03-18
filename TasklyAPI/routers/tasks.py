@@ -20,6 +20,7 @@ async def get_tasks(current_user: User = Depends(get_current_user)):
 @router.post("/tasks", tags=["tasks"])
 async def create_task(task: TaskCreate, current_user : User = Depends(get_current_user)):
     tasks = await get_all_tasks()
+    print(tasks)
     new_task = Task(
         id= str(uuid4()),
         title= task.title,

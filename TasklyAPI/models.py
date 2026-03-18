@@ -48,7 +48,7 @@ class TokenResponse(BaseModel):
 
 class TaskCreate(BaseModel):
     title: str = Field(..., min_length=1, max_length=100)
-    description: str = Field(..., min_length=1, max_length=500)
+    description: str = Field(..., min_length=0, max_length=500)
 
 
 class TaskUpdate(BaseModel):
