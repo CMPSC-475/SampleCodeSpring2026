@@ -149,6 +149,15 @@ struct SignupView: View {
     
     private func signup() {
         //TODO: signup action
+        Task {
+            do {
+                let respone = try await networkManager.signup(email: email, password: password)
+                authManager.setToken(respone.accessToken)
+                dismiss()
+            } catch {
+                
+            }
+        }
     }
 }
 

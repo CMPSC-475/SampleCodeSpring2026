@@ -210,7 +210,7 @@ struct MainView: View {
         // Check if error is unauthorized
         if case NetworkManager.NetworkError.unauthorized = error {
             //TODO: uncomment for logout
-            //authManager.logout()
+            authManager.logout()
             return
         }
         
@@ -220,7 +220,7 @@ struct MainView: View {
     
     private func logout() {
         //TODO: uncomment for logout
-        //authManager.logout()
+        authManager.logout()
         tasks = []
     }
 }

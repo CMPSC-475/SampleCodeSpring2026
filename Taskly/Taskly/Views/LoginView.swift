@@ -122,7 +122,14 @@ struct LoginView: View {
     
     // MARK: - Actions
     private func login() {
-        //TODO: login action for button
+        Task {
+            do {
+                let response = try await networkManager.login(email: email, password: password)
+                authManager.setToken(response.accessToken)
+            } catch {
+                print("error login")
+            }
+        }
     }
 }
 

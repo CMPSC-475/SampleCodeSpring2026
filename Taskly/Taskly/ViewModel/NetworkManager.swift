@@ -95,7 +95,9 @@ class NetworkManager {
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "accept")
         
-        //TODO: add auth header
+        if let token = authManager?.accessToken {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
@@ -133,7 +135,9 @@ class NetworkManager {
         request.setValue("application/json", forHTTPHeaderField: "accept")
         request.setValue("application/json", forHTTPHeaderField: "content-type")
         
-        //TODO: add auth header
+        if let token = authManager?.accessToken {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
         
         request.httpBody = try JSONSerialization.data(withJSONObject: taskData, options: [])
         
@@ -166,7 +170,9 @@ class NetworkManager {
         request.httpMethod = "DELETE"
         request.setValue("*/*", forHTTPHeaderField: "accept")
         
-        //TODO: add auth header
+        if let token = authManager?.accessToken {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
         
         let (_, response) = try await URLSession.shared.data(for: request)
         
@@ -198,7 +204,9 @@ class NetworkManager {
         request.httpMethod = "PATCH"
         request.setValue("application/json", forHTTPHeaderField: "accept")
         
-        //TODO: add auth header
+        if let token = authManager?.accessToken {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
         
         // Perform the request
         let (_, response) = try await URLSession.shared.data(for: request)
@@ -236,7 +244,9 @@ class NetworkManager {
         request.setValue("application/json", forHTTPHeaderField: "accept")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        //TODO: add auth header
+        if let token = authManager?.accessToken {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
         
         // Encode the body
         request.httpBody = try JSONSerialization.data(withJSONObject: taskData)

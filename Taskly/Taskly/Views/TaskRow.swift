@@ -32,7 +32,6 @@ struct TaskRow: View {
     }
     
     // MARK: - Subviews
-    
     private var checkmarkCircle: some View {
         ZStack {
             Circle()

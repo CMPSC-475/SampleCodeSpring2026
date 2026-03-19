@@ -12,9 +12,7 @@ struct AuthContainerView: View {
     
     var body: some View {
         Group {
-            //TODO: check if user is authenticated
-            //if authManager.isAuthenticated {
-            if true {
+            if authManager.isAuthenticated {
                 MainView()
             } else {
                 LoginView()
