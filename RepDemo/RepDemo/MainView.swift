@@ -6,6 +6,31 @@
 //
 
 import SwiftUI
+import UIKit
+
+struct ActivityIndicatorView: UIViewRepresentable {
+    var isAnimating: Bool = false
+    
+    
+    func makeUIView(context: Context) -> UIActivityIndicatorView {
+        let indicator = UIActivityIndicatorView()
+        indicator.style = .large
+        indicator.startAnimating( )
+        return indicator
+    }
+    
+    func updateUIView(_ uiView: UIActivityIndicatorView, context: Context) {
+        if isAnimating {
+            uiView.startAnimating()
+        } else {
+            uiView.stopAnimating()
+        }
+    }
+    
+    
+}
+
+
 
 struct MainView: View {
     
@@ -18,11 +43,7 @@ struct MainView: View {
                 Text(isLoading ? "Stop Loading" : "Start Loading")
                     .font(Font.largeTitle.bold())
             }
-            
-            if isLoading {
-                //TODO: Replace with UIActivityIndicator from UIKit
-                ProgressView()
-            }
+            ActivityIndicatorView(isAnimating: isLoading)
         }
         .padding()
     }
