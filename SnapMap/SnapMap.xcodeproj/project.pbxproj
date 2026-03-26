@@ -11,9 +11,9 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		C38380FA2F7335EA004A1474 /* GeoCapture */ = {
+		C38380FA2F7335EA004A1474 /* SnapMap */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = GeoCapture;
+			path = SnapMap;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -32,7 +32,7 @@
 		C38380EF2F7335EA004A1474 = {
 			isa = PBXGroup;
 			children = (
-				C38380FA2F7335EA004A1474 /* GeoCapture */,
+				C38380FA2F7335EA004A1474 /* SnapMap */,
 				C38380F92F7335EA004A1474 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,7 +61,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				C38380FA2F7335EA004A1474 /* GeoCapture */,
+				C38380FA2F7335EA004A1474 /* SnapMap */,
 			);
 			name = SnapMap;
 			packageProductDependencies = (
