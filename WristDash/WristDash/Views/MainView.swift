@@ -22,7 +22,7 @@ struct MainView: View {
 
                 Section {
                     Button("Send to Watch") {
-                        //TODO: send update to watch
+                        sessionManager.sendUpdate(number: Int(dashboardManager.selectedNumber), color: dashboardManager.selectedColor, iconName: dashboardManager.selectedIcon, message: dashboardManager.message)
                     }
                     .frame(maxWidth: .infinity)
                     .font(.headline)
