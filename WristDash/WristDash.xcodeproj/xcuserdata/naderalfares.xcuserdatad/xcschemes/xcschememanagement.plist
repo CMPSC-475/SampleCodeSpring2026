@@ -4,15 +4,38 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>WristDash.xcscheme_^#shared#^_</key>
+		<key>WristDash-Watch Watch App.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>WristDashWatch Watch App.xcscheme_^#shared#^_</key>
+		<key>WristDash.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>
+		</dict>
+		<key>WristDashWidgetExtension.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>C37C38B72F7E09FB00D3659F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C37C390A2F7E12D000D3659F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C38E1A9A2F8767BD00701CE7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

@@ -7,47 +7,100 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C38E1A392F856D0300701CE7 /* WristDashWatch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = C38E1A2F2F856D0200701CE7 /* WristDashWatch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C37C39152F7E12D200D3659F /* WristDash-Watch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = C37C390B2F7E12D000D3659F /* WristDash-Watch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C38E1B082F876EBA00701CE7 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C38E1B072F876EBA00701CE7 /* WidgetKit.framework */; };
+		C38E1B0A2F876EBA00701CE7 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C38E1B092F876EBA00701CE7 /* SwiftUI.framework */; };
+		C38E1B1B2F876EBB00701CE7 /* WristDashWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C38E1B052F876EBA00701CE7 /* WristDashWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		C38E1A372F856D0300701CE7 /* PBXContainerItemProxy */ = {
+		C37C39132F7E12D200D3659F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C37C38B02F7E09FB00D3659F /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = C38E1A2E2F856D0100701CE7;
-			remoteInfo = "WristDashWatch Watch App";
+			remoteGlobalIDString = C37C390A2F7E12D000D3659F;
+			remoteInfo = "WristDash-Watch Watch App";
+		};
+		C38E1B192F876EBB00701CE7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C37C38B02F7E09FB00D3659F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C38E1B042F876EBA00701CE7;
+			remoteInfo = WristDashWidgetExtension;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		C38E1A3A2F856D0300701CE7 /* Embed Watch Content */ = {
+		C37C39162F7E12D200D3659F /* Embed Watch Content */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				C38E1A392F856D0300701CE7 /* WristDashWatch Watch App.app in Embed Watch Content */,
+				C37C39152F7E12D200D3659F /* WristDash-Watch Watch App.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C38E1B1C2F876EBB00701CE7 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				C38E1B1B2F876EBB00701CE7 /* WristDashWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		C37C38B82F7E09FB00D3659F /* WristDash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WristDash.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C38E1A2F2F856D0200701CE7 /* WristDashWatch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WristDashWatch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C37C390B2F7E12D000D3659F /* WristDash-Watch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WristDash-Watch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C38E1B052F876EBA00701CE7 /* WristDashWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WristDashWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		C38E1B072F876EBA00701CE7 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		C38E1B092F876EBA00701CE7 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		C38E1B2A2F877A0400701CE7 /* WristDashWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WristDashWidgetExtension.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		C38E1B1F2F876EBB00701CE7 /* Exceptions for "WristDashWidget" folder in "WristDashWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = C38E1B042F876EBA00701CE7 /* WristDashWidgetExtension */;
+		};
+		C38E1B262F8773FA00701CE7 /* Exceptions for "WristDash" folder in "WristDash" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = C37C38B72F7E09FB00D3659F /* WristDash */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		C37C38BA2F7E09FB00D3659F /* WristDash */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				C38E1B262F8773FA00701CE7 /* Exceptions for "WristDash" folder in "WristDash" target */,
+			);
 			path = WristDash;
 			sourceTree = "<group>";
 		};
-		C38E1A302F856D0200701CE7 /* WristDashWatch Watch App */ = {
+		C37C390C2F7E12D000D3659F /* WristDash-Watch Watch App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "WristDashWatch Watch App";
+			path = "WristDash-Watch Watch App";
+			sourceTree = "<group>";
+		};
+		C38E1B0B2F876EBA00701CE7 /* WristDashWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				C38E1B1F2F876EBB00701CE7 /* Exceptions for "WristDashWidget" folder in "WristDashWidgetExtension" target */,
+			);
+			path = WristDashWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -60,10 +113,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C38E1A2C2F856D0100701CE7 /* Frameworks */ = {
+		C37C39082F7E12D000D3659F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C38E1B022F876EBA00701CE7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C38E1B0A2F876EBA00701CE7 /* SwiftUI.framework in Frameworks */,
+				C38E1B082F876EBA00701CE7 /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,8 +135,11 @@
 		C37C38AF2F7E09FB00D3659F = {
 			isa = PBXGroup;
 			children = (
+				C38E1B2A2F877A0400701CE7 /* WristDashWidgetExtension.entitlements */,
 				C37C38BA2F7E09FB00D3659F /* WristDash */,
-				C38E1A302F856D0200701CE7 /* WristDashWatch Watch App */,
+				C37C390C2F7E12D000D3659F /* WristDash-Watch Watch App */,
+				C38E1B0B2F876EBA00701CE7 /* WristDashWidget */,
+				C38E1B062F876EBA00701CE7 /* Frameworks */,
 				C37C38B92F7E09FB00D3659F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -83,9 +148,19 @@
 			isa = PBXGroup;
 			children = (
 				C37C38B82F7E09FB00D3659F /* WristDash.app */,
-				C38E1A2F2F856D0200701CE7 /* WristDashWatch Watch App.app */,
+				C37C390B2F7E12D000D3659F /* WristDash-Watch Watch App.app */,
+				C38E1B052F876EBA00701CE7 /* WristDashWidgetExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		C38E1B062F876EBA00701CE7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C38E1B072F876EBA00701CE7 /* WidgetKit.framework */,
+				C38E1B092F876EBA00701CE7 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -98,12 +173,14 @@
 				C37C38B42F7E09FB00D3659F /* Sources */,
 				C37C38B52F7E09FB00D3659F /* Frameworks */,
 				C37C38B62F7E09FB00D3659F /* Resources */,
-				C38E1A3A2F856D0300701CE7 /* Embed Watch Content */,
+				C37C39162F7E12D200D3659F /* Embed Watch Content */,
+				C38E1B1C2F876EBB00701CE7 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				C38E1A382F856D0300701CE7 /* PBXTargetDependency */,
+				C37C39142F7E12D200D3659F /* PBXTargetDependency */,
+				C38E1B1A2F876EBB00701CE7 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				C37C38BA2F7E09FB00D3659F /* WristDash */,
@@ -115,27 +192,49 @@
 			productReference = C37C38B82F7E09FB00D3659F /* WristDash.app */;
 			productType = "com.apple.product-type.application";
 		};
-		C38E1A2E2F856D0100701CE7 /* WristDashWatch Watch App */ = {
+		C37C390A2F7E12D000D3659F /* WristDash-Watch Watch App */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C38E1A3D2F856D0300701CE7 /* Build configuration list for PBXNativeTarget "WristDashWatch Watch App" */;
+			buildConfigurationList = C37C39192F7E12D200D3659F /* Build configuration list for PBXNativeTarget "WristDash-Watch Watch App" */;
 			buildPhases = (
-				C38E1A2B2F856D0100701CE7 /* Sources */,
-				C38E1A2C2F856D0100701CE7 /* Frameworks */,
-				C38E1A2D2F856D0100701CE7 /* Resources */,
+				C37C39072F7E12D000D3659F /* Sources */,
+				C37C39082F7E12D000D3659F /* Frameworks */,
+				C37C39092F7E12D000D3659F /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				C38E1A302F856D0200701CE7 /* WristDashWatch Watch App */,
+				C37C390C2F7E12D000D3659F /* WristDash-Watch Watch App */,
 			);
-			name = "WristDashWatch Watch App";
+			name = "WristDash-Watch Watch App";
 			packageProductDependencies = (
 			);
-			productName = "WristDashWatch Watch App";
-			productReference = C38E1A2F2F856D0200701CE7 /* WristDashWatch Watch App.app */;
+			productName = "WristDash-Watch Watch App";
+			productReference = C37C390B2F7E12D000D3659F /* WristDash-Watch Watch App.app */;
 			productType = "com.apple.product-type.application";
+		};
+		C38E1B042F876EBA00701CE7 /* WristDashWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C38E1B202F876EBB00701CE7 /* Build configuration list for PBXNativeTarget "WristDashWidgetExtension" */;
+			buildPhases = (
+				C38E1B012F876EBA00701CE7 /* Sources */,
+				C38E1B022F876EBA00701CE7 /* Frameworks */,
+				C38E1B032F876EBA00701CE7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				C38E1B0B2F876EBA00701CE7 /* WristDashWidget */,
+			);
+			name = WristDashWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = WristDashWidgetExtension;
+			productReference = C38E1B052F876EBA00701CE7 /* WristDashWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -150,7 +249,10 @@
 					C37C38B72F7E09FB00D3659F = {
 						CreatedOnToolsVersion = 26.4;
 					};
-					C38E1A2E2F856D0100701CE7 = {
+					C37C390A2F7E12D000D3659F = {
+						CreatedOnToolsVersion = 26.4;
+					};
+					C38E1B042F876EBA00701CE7 = {
 						CreatedOnToolsVersion = 26.4;
 					};
 				};
@@ -170,7 +272,8 @@
 			projectRoot = "";
 			targets = (
 				C37C38B72F7E09FB00D3659F /* WristDash */,
-				C38E1A2E2F856D0100701CE7 /* WristDashWatch Watch App */,
+				C37C390A2F7E12D000D3659F /* WristDash-Watch Watch App */,
+				C38E1B042F876EBA00701CE7 /* WristDashWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -183,7 +286,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C38E1A2D2F856D0100701CE7 /* Resources */ = {
+		C37C39092F7E12D000D3659F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C38E1B032F876EBA00701CE7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -200,7 +310,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C38E1A2B2F856D0100701CE7 /* Sources */ = {
+		C37C39072F7E12D000D3659F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C38E1B012F876EBA00701CE7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -210,10 +327,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		C38E1A382F856D0300701CE7 /* PBXTargetDependency */ = {
+		C37C39142F7E12D200D3659F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = C38E1A2E2F856D0100701CE7 /* WristDashWatch Watch App */;
-			targetProxy = C38E1A372F856D0300701CE7 /* PBXContainerItemProxy */;
+			target = C37C390A2F7E12D000D3659F /* WristDash-Watch Watch App */;
+			targetProxy = C37C39132F7E12D200D3659F /* PBXContainerItemProxy */;
+		};
+		C38E1B1A2F876EBB00701CE7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C38E1B042F876EBA00701CE7 /* WristDashWidgetExtension */;
+			targetProxy = C38E1B192F876EBB00701CE7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -344,11 +466,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WristDash/WristDash.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = JP74RZ3MMY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WristDash/Info.plist;
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -376,11 +501,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WristDash/WristDash.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = JP74RZ3MMY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WristDash/Info.plist;
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -403,7 +531,7 @@
 			};
 			name = Release;
 		};
-		C38E1A3B2F856D0300701CE7 /* Debug */ = {
+		C37C39172F7E12D200D3659F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -413,7 +541,7 @@
 				DEVELOPMENT_TEAM = JP74RZ3MMY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = WristDashWatch;
+				INFOPLIST_KEY_CFBundleDisplayName = "WristDash-Watch";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = edu.psu.WristDash;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -436,7 +564,7 @@
 			};
 			name = Debug;
 		};
-		C38E1A3C2F856D0300701CE7 /* Release */ = {
+		C37C39182F7E12D200D3659F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -446,7 +574,7 @@
 				DEVELOPMENT_TEAM = JP74RZ3MMY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = WristDashWatch;
+				INFOPLIST_KEY_CFBundleDisplayName = "WristDash-Watch";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = edu.psu.WristDash;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -466,6 +594,68 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 26.4;
+			};
+			name = Release;
+		};
+		C38E1B1D2F876EBB00701CE7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = WristDashWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JP74RZ3MMY;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WristDashWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = WristDashWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.psu.WristDash.WristDashWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C38E1B1E2F876EBB00701CE7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = WristDashWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JP74RZ3MMY;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WristDashWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = WristDashWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.psu.WristDash.WristDashWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -490,11 +680,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C38E1A3D2F856D0300701CE7 /* Build configuration list for PBXNativeTarget "WristDashWatch Watch App" */ = {
+		C37C39192F7E12D200D3659F /* Build configuration list for PBXNativeTarget "WristDash-Watch Watch App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C38E1A3B2F856D0300701CE7 /* Debug */,
-				C38E1A3C2F856D0300701CE7 /* Release */,
+				C37C39172F7E12D200D3659F /* Debug */,
+				C37C39182F7E12D200D3659F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C38E1B202F876EBB00701CE7 /* Build configuration list for PBXNativeTarget "WristDashWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C38E1B1D2F876EBB00701CE7 /* Debug */,
+				C38E1B1E2F876EBB00701CE7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

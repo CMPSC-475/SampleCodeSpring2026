@@ -1,14 +1,14 @@
 //
-//  WristDashWatchApp.swift
-//  WristDashWatch Watch App
+//  WristDash_WatchApp.swift
+//  WristDash-Watch Watch App
 //
-//  Created by Nader Alfares on 4/7/26.
+//  Created by Nader Alfares on 4/1/26.
 //
 
 import SwiftUI
 
 @main
-struct WristDashWatch_Watch_AppApp: App {
+struct WristDash_Watch_Watch_AppApp: App {
     @State var sessionManager : SessionManager = SessionManager()
     var body: some Scene {
         WindowGroup {

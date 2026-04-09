@@ -1,4 +1,13 @@
+//
+//  WatchSessionManager.swift
+//  WristDash
+//
+//  Created by Nader Alfares on 4/1/26.
+//
+import SwiftUI
+import WatchConnectivity
 
+//WatchOS session manager
 @Observable
 class SessionManager : NSObject {
     
@@ -7,9 +16,30 @@ class SessionManager : NSObject {
     var iconName: String = "star.fill"
     var message: String = "Hello Watch!"
 
+    override init() {
+        super.init()
+        if WCSession.isSupported() {
+            let session = WCSession.default
+            session.delegate = self
+            session.activate()
+        }
+    }
 
     private func update(from context: [String: Any]) {
-
+        DispatchQueue.main.async {
+            if let number = context["number"] as? Int {
+                self.number = number
+            }
+            if let colorName = context["colorName"] as? String {
+                self.color = self.color(name: colorName)
+            }
+            if let iconName = context["iconName"] as? String {
+                self.iconName = iconName
+            }
+            if let message = context["message"] as? String {
+                self.message = message
+            }
+        }
     }
     
     

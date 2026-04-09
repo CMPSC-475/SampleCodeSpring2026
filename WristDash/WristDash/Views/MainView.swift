@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import ActivityKit
+import WidgetKit
 
 struct MainView: View {
     @Environment(DashboardManager.self) var dashboardManager : DashboardManager
@@ -21,8 +23,10 @@ struct MainView: View {
                 MessageFeild()
 
                 Section {
-                    Button("Send to Watch") {
-                        sessionManager.sendUpdate(number: Int(dashboardManager.selectedNumber), color: dashboardManager.selectedColor, iconName: dashboardManager.selectedIcon, message: dashboardManager.message)
+                    Button("Send to Watch!") {
+                        sMngr.sendUpdate(number: Int(dsMngr.selectedNumber), color: dsMngr.selectedColor, iconName: dsMngr.selectedIcon, message: dsMngr.message)
+                        startOrUpdateLiveActivity()
+                        updateWidget()
                     }
                     .frame(maxWidth: .infinity)
                     .font(.headline)
@@ -30,6 +34,14 @@ struct MainView: View {
             }
             .navigationTitle("WristDash")
         }
+    }
+
+    private func startOrUpdateLiveActivity() {
+        //TODO: Update Live Activity
+    }
+
+    private func updateWidget() {
+        //TODO: Update Widget
     }
 }
 
