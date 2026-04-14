@@ -1,0 +1,28 @@
+body {
+    font-family: sans-serif;
+    padding: 2rem;
+}
+
+#flights-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+#flights-table th,
+#flights-table td {
+    padding: 1rem;
+    text-align: left;
+}
+
+
+#flights-table thead th {
+    background-color: cadetblue;
+    color: #ffffff;
+}
+
+#flights-table tbody tr:nth-child(even) {
+    background: #676767;
+}
+
