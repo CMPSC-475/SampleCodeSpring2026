@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Flight } from "./models/flights";
+import { Flight } from "./models/flight";
 
 export default function Home() {
   const flights = [
