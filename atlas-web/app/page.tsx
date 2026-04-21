@@ -1,54 +1,14 @@
-import Image from "next/image";
-import { Flight } from "./models/flight";
+import FlightTable from "./components/FlightsTable";
 
 export default function Home() {
-  const flights = [
-    {
-      "fightNumber" : 1234,
-      "depart" : "JFK",
-      "arrival": "LAX",
-      "price" : 200
-    },
-    {
-      "fightNumber" : 1234,
-      "depart" : "JFK",
-      "arrival": "LAX",
-      "price" : 200
-    },
-    {
-      "fightNumber" : 1234,
-      "depart" : "JFK",
-      "arrival": "LAX",
-      "price" : 200
-    }
-  ]
   return (
-    <div className="p-8">
-      <h1 className="text-center text-3xl font-bold"> Available Flights</h1>
-
-      <table className="w-full text-left">
-        <thead>
-          <tr>
-            <th>Flight Number</th>
-            <th>Departure</th>
-            <th>Arrival</th>
-            <th>Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          {flights.map((flight, index) => (
-            <tr>
-              <td> {flight.fightNumber}</td>
-              <td> {flight.depart}</td>
-              <td> {flight.arrival}</td>
-              <td> {flight.price}</td>
-            </tr>
-          ))
-
-          }
-        </tbody>
-      </table>
-    
-    </div>
+    <main className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
+      <h1 className="mb-6 text-center text-2xl font-bold text-gray-100 sm:text-3xl">
+          Available Flights
+      </h1>
+      <section className="rounded-xl border border-slate-800 bg-slate-900/70 p-4 shadow-sm sm:p-6">
+        <FlightTable />
+      </section>
+    </main>
   );
 }
